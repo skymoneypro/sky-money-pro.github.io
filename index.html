@@ -3,162 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Money Pro | Elite Admin Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Sky Money Pro | Premium Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1; --primary-dark: #4f46e5;
-            --bg: #f8fafc; --sidebar: #0f172a;
-            --white: #ffffff; --text-main: #1e293b;
-            --text-muted: #64748b; --danger: #ef4444;
-            --success: #10b981; --warning: #f59e0b;
+            --primary: #0f172a; --secondary: #2563eb; --accent: #38bdf8;
+            --light: #f8fafc; --white: #ffffff; --success: #10b981; --danger: #f43f5e;
+            --card-bg: #ffffff; --input-bg: #ffffff; --border-color: #e2e8f0;
+            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --text-muted: #64748b;
         }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0; background: var(--bg); color: var(--text-main);
-            display: flex; min-height: 100vh;
+        body.dark-mode {
+            --primary: #f8fafc; --secondary: #60a5fa; --light: #0f172a; 
+            --white: #1e293b; --card-bg: #1e293b; --input-bg: #334155; 
+            --border-color: #334155; --text-muted: #94a3b8;
+            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            color: var(--primary);
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 280px; background: var(--sidebar); color: white;
-            padding: 30px 20px; display: flex; flex-direction: column;
-            position: fixed; height: 100vh;
-        }
+        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-        .logo { font-size: 24px; font-weight: 800; margin-bottom: 40px; color: var(--primary); text-align: center; }
-        .logo span { color: white; }
-
-        .nav-menu { list-style: none; padding: 0; margin: 0; }
-        .nav-item {
-            padding: 15px 20px; border-radius: 12px; margin-bottom: 10px;
-            cursor: pointer; display: flex; align-items: center; transition: 0.3s;
-            color: #94a3b8; font-weight: 600;
-        }
-        .nav-item i { margin-right: 15px; width: 20px; }
-        .nav-item:hover, .nav-item.active { background: rgba(99, 102, 241, 0.15); color: white; }
-        .nav-item.active { background: var(--primary); }
-
-        /* Main Content */
-        .main-content { margin-left: 280px; flex: 1; padding: 40px; }
+        .banner-container { width: calc(100% - 40px); height: 130px; overflow: hidden; position: relative; border-radius: 20px; margin: 20px auto; box-shadow: var(--card-shadow); }
+        .banner-wrapper { display: flex; width: 800%; height: 100%; animation: slide 24s infinite linear; }
+        .banner-slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .header h1 { font-size: 24px; margin: 0; }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px; }
-        .stat-card {
-            background: var(--white); padding: 25px; border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center;
+        @keyframes slide {
+            0%, 8% { transform: translateX(0%); }
+            12.5%, 20.5% { transform: translateX(-12.5%); }
+            25%, 33% { transform: translateX(-25%); }
+            37.5%, 45.5% { transform: translateX(-37.5%); }
+            50%, 58% { transform: translateX(-50%); }
+            62.5%, 70.5% { transform: translateX(-62.5%); }
+            75%, 83% { transform: translateX(-75%); }
+            87.5%, 95.5% { transform: translateX(-87.5%); }
+            100% { transform: translateX(0%); }
         }
-        .stat-icon {
-            width: 50px; height: 50px; border-radius: 12px; display: flex;
-            align-items: center; justify-content: center; margin-right: 20px; font-size: 20px;
+
+        #auth-screen { 
+            min-height: 100vh; 
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1611974714024-4607caec1334?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Table Design */
-        .card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; padding: 15px; color: var(--text-muted); font-size: 13px; border-bottom: 1px solid #f1f5f9; }
-        td { padding: 18px 15px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 500; }
+        .header-box { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            color: white; padding: 50px 20px 80px; border-radius: 0 0 45px 45px; 
+            text-align: center; position: relative; overflow: hidden;
+        }
+        body.dark-mode .header-box { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
         
-        .badge { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .badge-active { background: #dcfce7; color: #15803d; }
-        .badge-banned { background: #fee2e2; color: #b91c1c; }
-
-        .btn {
-            border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer;
-            font-weight: 600; font-size: 12px; transition: 0.2s; margin-right: 5px;
+        .theme-toggle-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.15); border: none; width: 35px; height: 35px; 
+            border-radius: 50%; color: white; cursor: pointer; display: flex; 
+            align-items: center; justify-content: center; backdrop-filter: blur(5px); z-index: 20;
         }
-        .btn-edit { background: #e0e7ff; color: #4338ca; }
-        .btn-ban { background: #fee2e2; color: #b91c1c; }
-        .btn-unban { background: #dcfce7; color: #15803d; }
 
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .modal-content { background: white; padding: 35px; border-radius: 24px; width: 380px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 20px 0; border: 1px solid #e2e8f0; border-radius: 10px; outline: none; }
+        .main-card { background: var(--card-bg); margin: -60px 20px 20px; padding: 25px; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; position: relative; z-index: 10; transition: background 0.3s; }
+        .btn-action { background: var(--secondary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; transition: 0.3s; }
+
+        .inv-card { background: var(--card-bg); border-radius: 20px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: background 0.3s; }
+        .profile-card { background: linear-gradient(135deg, var(--secondary), #1d4ed8); color: white; margin: 20px; padding: 25px; border-radius: 24px; position: relative; }
+        .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 20px 20px; text-align: center; }
+        .action-item { background: var(--card-bg); padding: 15px 5px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: background 0.3s; }
+
+        .trx-item { background: var(--card-bg); margin-bottom: 10px; padding: 15px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); transition: background 0.3s, border-color 0.3s; }
+        .status-pill { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; transition: background 0.3s; }
+        .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; transition: color 0.3s; }
+        .nav-item.active { color: var(--secondary); font-weight: 700; }
+
+        .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .popup-card { background: var(--card-bg); transition: background 0.3s; }
+        .bank-info { background: var(--input-bg); padding: 15px; border-radius: 15px; margin-top: 10px; display: none; text-align: left; border-left: 5px solid var(--secondary); color: var(--primary); transition: background 0.3s; }
+        
+        .mining-status-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 15px; margin-bottom: 15px; transition: background 0.3s, border-color 0.3s; }
+        .progress-container { background: var(--border-color); height: 6px; border-radius: 10px; margin: 12px 0; overflow: hidden; }
+        .progress-bar { background: var(--secondary); height: 100%; border-radius: 10px; transition: 0.5s; }
+        
+        .guide-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: var(--card-shadow); transition: background 0.3s; }
+        .guide-step { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 12px; }
+        .guide-icon { background: var(--border-color); color: var(--secondary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; font-weight: bold; }
+        .redeem-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin: 20px; border: 1px dashed var(--secondary); }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <div class="logo">Sky<span>Money</span></div>
-    <ul class="nav-menu">
-        <li class="nav-item active" onclick="switchTab('users', this)"><i class="fas fa-users"></i> Users</li>
-        <li class="nav-item" onclick="switchTab('requests', this)"><i class="fas fa-money-bill-transfer"></i> Requests</li>
-    </ul>
-</div>
-
-<div class="main-content">
-    <div class="header">
-        <h1>Dashboard Overview</h1>
-        <button class="btn btn-edit" onclick="loadData()"><i class="fas fa-sync"></i> Refresh Data</button>
-    </div>
-
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon" style="background: #e0e7ff; color: #4338ca;"><i class="fas fa-user-group"></i></div>
-            <div><small style="color:var(--text-muted)">Total Users</small><div id="total-users" style="font-size:22px; font-weight:800;">0</div></div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon" style="background: #dcfce7; color: #15803d;"><i class="fas fa-wallet"></i></div>
-            <div><small style="color:var(--text-muted)">System Balance</small><div id="total-bal" style="font-size:22px; font-weight:800;">Rs. 0</div></div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon" style="background: #fef3c7; color: #b45309;"><i class="fas fa-clock"></i></div>
-            <div><small style="color:var(--text-muted)">Pending Tasks</small><div id="pending-count" style="font-size:22px; font-weight:800;">0</div></div>
-        </div>
-    </div>
-
-    <div id="users-tab" class="card">
-        <h3>User Management</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>User Email</th>
-                    <th>Balance</th>
-                    <th>Referral</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="user-body"></tbody>
-        </table>
-    </div>
-
-    <div id="requests-tab" class="card" style="display:none;">
-        <h3>Transaction Requests</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Details</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="req-body"></tbody>
-        </table>
+<div id="tg-popup" class="modal-overlay">
+    <div class="popup-card" style="padding:25px; border-radius:24px; text-align:center; width:80%;">
+        <i class="fab fa-telegram" style="font-size: 50px; color: #0088cc; margin-bottom: 15px;"></i>
+        <h3>Join Telegram Group</h3>
+        <p style="color:var(--text-muted); font-size:14px;">දිනපතා Withdraw Proof බැලීමට අපගේ Telegram සමූහයට එක්වන්න.</p>
+        <a href="https://t.me/Sky_Money_Money_Pro" target="_blank" style="text-decoration:none;"><button class="btn-action" style="background:#0088cc;">JOIN NOW</button></a>
+        <button onclick="closePopup()" id="close-btn" style="margin-top:15px; border:none; background:none; color:var(--text-muted); display:none; width:100%; cursor:pointer;">CLOSE (5s)</button>
     </div>
 </div>
 
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <h2 id="edit-title">Edit Balance</h2>
-        <input type="number" id="new-balance-input">
-        <div style="display:flex; gap: 10px;">
-            <button class="btn btn-edit" style="flex:1; padding:12px;" onclick="saveBalance()">Update</button>
-            <button class="btn btn-ban" style="flex:1; padding:12px;" onclick="closeModal()">Cancel</button>
+<div id="auth-screen">
+    <div style="text-align:center; padding: 20px; width: 100%;">
+        <h1 style="font-family:'Poppins'; color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-size: 32px;">Sky Money <span style="color:var(--accent);">Pro</span></h1>
+        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 400px; margin: 0 auto; backdrop-filter: blur(10px);">
+            <div id="login-form">
+                <h3 style="margin-top:0; color: #0f172a;">Login</h3>
+                <input type="email" id="l-phone" placeholder="Email Address">
+                <input type="password" id="l-pass" placeholder="Password">
+                <button class="btn-action" onclick="login()">LOGIN</button>
+                <p onclick="document.getElementById('login-form').style.display='none';document.getElementById('reg-form').style.display='block';" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor: pointer; font-weight: 600;">Don't have an account? Register</p>
+            </div>
+            <div id="reg-form" style="display:none;">
+                <h3 style="margin-top:0; color: #0f172a;">Create Account</h3>
+                <input type="email" id="r-phone" placeholder="Email Address">
+                <input type="password" id="r-pass" placeholder="Password">
+                <input type="text" id="r-ref" placeholder="Referral Code (Optional)">
+                <button class="btn-action" onclick="register()">REGISTER</button>
+                <p onclick="location.reload()" style="font-size:12px; margin-top:15px; cursor: pointer; font-weight: 600; color:#0f172a;">Back to Login</p>
+            </div>
         </div>
     </div>
+</div>
+
+<div id="main-app" style="display:none;">
+    <section id="home" class="page active">
+        <div class="header-box">
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+            <h2 style="font-family:'Poppins'; margin:0; font-size: 28px;">Sky Money <span style="color:var(--accent);">Pro</span></h2>
+            <p style="font-size: 11px; opacity: 0.9;">THE MOST TRUSTED MINING PLATFORM</p>
+        </div>
+        <div class="main-card">
+            <small style="font-weight:600; color:var(--text-muted);">TOTAL WALLET BALANCE</small>
+            <h1 id="bal-text" style="font-size:36px; margin:10px 0;">Rs. 0</h1>
+            <button onclick="getDailyBonus()" class="btn-action" style="width:auto; border-radius:30px; padding: 12px 30px;">
+                <i class="fas fa-gift"></i> CLAIM Rs. 200 BONUS
+            </button>
+        </div>
+        <div style="padding: 0 20px;">
+            <div class="guide-box">
+                <h3 style="margin-top:0; font-size: 15px; color: var(--secondary);"> මුදල් උපයන්නේ කෙසේද?</h3>
+                <div class="guide-step"><div class="guide-icon">1</div><div><b>Invest:</b> Market එකෙන් ඔබට ගැලපෙන සැලසුමක් තෝරා ආයෝජනය කරන්න.</div></div>
+                <div class="guide-step"><div class="guide-icon">2</div><div><b>Mining:</b> දිනපතා ලාභය Mining Status කොටසේ ස්වයංක්‍රීයව එකතු වේ.</div></div>
+                <div class="guide-step"><div class="guide-icon">3</div><div><b>Withdraw:</b> අවම Rs. 1000 වූ සැණින් බැංකුවට හෝ Binance වෙත ලබාගන්න.</div></div>
+            </div>
+            <h3 style="font-size:16px; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> Active Mining Status</h3>
+            <div id="mining-status-area"></div>
+        </div>
+    </section>
+
+    <section id="market" class="page">
+        <h3 style="padding:20px;">Monthly Investment Plans</h3>
+        <div style="padding: 0 20px;" id="market-list"></div>
+    </section>
+
+    <section id="profile" class="page">
+        <div class="profile-card">
+            <div style="display:flex; align-items:center;">
+                <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-user"></i></div>
+                <div style="margin-left:15px;"><h2 id="u-phone" style="margin:0; font-size:16px;">Loading...</h2><small>Verified Member</small></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                <div><small>Balance</small><div id="p-bal" style="font-weight:700;">Rs. 0</div></div>
+                <div style="text-align:right;"><small>Code</small><div id="u-ref-code" style="font-weight:700;">---</div></div>
+            </div>
+        </div>
+        <div class="redeem-box">
+            <h4 style="margin:0 0 10px 0; font-size:14px;"><i class="fas fa-gift" style="color:#ef4444;"></i> Redeem Gift Code</h4>
+            <input type="text" id="gift-code-input" placeholder="Enter Admin Gift Code">
+            <button class="btn-action" onclick="redeemGiftCode()" style="background:linear-gradient(135deg, #ef4444, #f43f5e);">REDEEM NOW</button>
+        </div>
+        <div class="action-grid">
+            <div class="action-item" onclick="nav('deposit')"><i class="fas fa-plus-circle" style="color:var(--secondary)"></i><br><small>Deposit</small></div>
+            <div class="action-item" onclick="nav('withdraw')"><i class="fas fa-wallet" style="color:#10b981"></i><br><small>Withdraw</small></div>
+            <div class="action-item" onclick="nav('market')"><i class="fas fa-rocket" style="color:#8b5cf6"></i><br><small>Upgrade</small></div>
+            <div class="action-item" onclick="window.open('https://t.me/Sky_Money_Money_Pro')"><i class="fab fa-telegram" style="color:#0088cc"></i><br><small>Group</small></div>
+        </div>
+        <h3 style="padding:0 20px; font-size:16px;">Transaction History</h3>
+        <div id="trans-history" style="padding:0 20px;"></div>
+        <div style="padding:20px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT</button></div>
+    </section>
+
+    <section id="deposit" class="page">
+        <div style="padding:20px;">
+            <h3>Deposit</h3>
+            <button class="btn-action" onclick="toggleBank()" style="background: var(--primary); color: var(--light); margin-bottom: 10px;">PAYMENT DETAILS</button>
+            <div id="bank-box" class="bank-info">
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.05); padding:10px; border-radius:10px;">
+                    <span><strong>Binance Pay ID:</strong> <span id="binance-id">123456</span></span>
+                    <button onclick="copyID()" style="background:var(--secondary); color:white; border:none; padding:5px 10px; border-radius:5px; font-size:10px;"><i class="fas fa-copy"></i> COPY</button>
+                </div>
+            </div>
+            <input type="number" id="d-amt" placeholder="Deposit Amount">
+            <input type="email" id="d-reg-phone" placeholder="Registered Email Address">
+            <input type="text" id="d-ref" placeholder="Transaction ID">
+            <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit</button>
+        </div>
+    </section>
+
+    <section id="withdraw" class="page">
+        <div style="padding:20px;">
+            <h3>Withdraw</h3>
+            <input type="number" id="w-amt" placeholder="Amount (1000 - 5000)">
+            <input type="text" id="w-bin" placeholder="Binance Pay ID / Bank Details">
+            <button class="btn-action" onclick="submitReq('withdraw')">Submit Withdrawal</button>
+        </div>
+    </section>
+
+    <nav class="nav-bar">
+        <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i><br>Home</div>
+        <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-rocket"></i><br>Market</div>
+        <div class="nav-item" onclick="nav('deposit', this)"><i class="fas fa-plus-circle"></i><br>Deposit</div>
+        <div class="nav-item" onclick="nav('withdraw', this)"><i class="fas fa-wallet"></i><br>Withdraw</div>
+        <div class="nav-item" onclick="nav('profile', this)"><i class="fas fa-user-circle"></i><br>Profile</div>
+    </nav>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyA-LrdE3qEML4bk4KXnyFtoy4OQ4Of2IC4",
@@ -166,113 +235,138 @@
         projectId: "sky-money-47ca1",
         storageBucket: "sky-money-47ca1.firebasestorage.app",
         messagingSenderId: "44600459064",
-        appId: "1:44600459064:web:01cb33d3db2b009ce7cbcd"
+        appId: "1:44600459064:web:01cb33d3db2b009ce7cbcd",
+        measurementId: "G-XQ5W1RH251"
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    let currentUid = "";
+    let userData = null;
 
-    async function loadData() {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        const userBody = document.getElementById('user-body');
-        const reqBody = document.getElementById('req-body');
-        
-        userBody.innerHTML = "";
-        reqBody.innerHTML = "";
-        
-        let totalUsers = 0;
-        let totalBal = 0;
-        let pending = 0;
+    // --- Authentication ---
+    window.register = async () => {
+        const email = document.getElementById('r-phone').value;
+        const pass = document.getElementById('r-pass').value;
+        const refBy = document.getElementById('r-ref').value;
+        if(!email || !pass) return alert("Fill all fields");
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, pass);
+            const myCode = "SKY" + Math.floor(1000 + Math.random() * 9000);
+            await setDoc(doc(db, "users", res.user.uid), {
+                email, refCode: myCode, bal: 0, activePlans: [], requests: [], usedCodes: [], bonusClaimed: false
+            });
+            alert("Registered!");
+            location.reload();
+        } catch(e) { alert(e.message); }
+    };
 
-        querySnapshot.forEach((userDoc) => {
-            const user = userDoc.data();
-            const uid = userDoc.id;
-            totalUsers++;
-            totalBal += (user.bal || 0);
+    window.login = async () => {
+        const email = document.getElementById('l-phone').value;
+        const pass = document.getElementById('l-pass').value;
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+        } catch(e) { alert("Login Failed!"); }
+    };
 
-            // Populate User Table
-            userBody.innerHTML += `
-                <tr>
-                    <td>${user.email}</td>
-                    <td><b>Rs. ${user.bal || 0}</b></td>
-                    <td><code>${user.refCode || 'N/A'}</code></td>
-                    <td><span class="badge ${user.isBanned ? 'badge-banned' : 'badge-active'}">${user.isBanned ? 'Banned' : 'Active'}</span></td>
-                    <td>
-                        <button class="btn btn-edit" onclick="openEdit('${uid}', ${user.bal || 0})">Edit Bal</button>
-                        <button class="btn ${user.isBanned ? 'btn-unban' : 'btn-ban'}" onclick="toggleUserStatus('${uid}', ${user.isBanned})">
-                            ${user.isBanned ? 'Unban' : 'Ban User'}
-                        </button>
-                    </td>
-                </tr>
-            `;
+    window.logout = () => signOut(auth).then(() => location.reload());
 
-            // Populate Requests Table
-            if(user.requests) {
-                user.requests.forEach((req, index) => {
-                    if(req.status === 'pending') {
-                        pending++;
-                        reqBody.innerHTML += `
-                            <tr>
-                                <td>${user.email}</td>
-                                <td><b style="color:${req.type === 'deposit' ? 'green' : 'red'}">${req.type.toUpperCase()}</b></td>
-                                <td>Rs. ${req.amount}</td>
-                                <td>${req.payID || 'Bank Transfer'}</td>
-                                <td>
-                                    <button class="btn btn-unban" onclick="processReq('${uid}', ${index}, 'approved')">Approve</button>
-                                    <button class="btn btn-ban" onclick="processReq('${uid}', ${index}, 'rejected')">Reject</button>
-                                </td>
-                            </tr>
-                        `;
-                    }
-                });
+    onAuthStateChanged(auth, async (user) => {
+        if(user) {
+            const snap = await getDoc(doc(db, "users", user.uid));
+            if(snap.exists()) {
+                userData = snap.data();
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                updateUI();
             }
-        });
-
-        document.getElementById('total-users').innerText = totalUsers;
-        document.getElementById('total-bal').innerText = "Rs. " + totalBal.toLocaleString();
-        document.getElementById('pending-count').innerText = pending;
-    }
-
-    window.openEdit = (uid, bal) => {
-        currentUid = uid;
-        document.getElementById('new-balance-input').value = bal;
-        document.getElementById('editModal').style.display = 'flex';
-    };
-
-    window.saveBalance = async () => {
-        const newBal = parseInt(document.getElementById('new-balance-input').value);
-        await updateDoc(doc(db, "users", currentUid), { bal: newBal });
-        closeModal();
-        loadData();
-    };
-
-    window.toggleUserStatus = async (uid, currentStatus) => {
-        if(confirm("මෙම පරිශීලකයාගේ තත්ත්වය වෙනස් කිරීමට අවශ්‍යද?")) {
-            await updateDoc(doc(db, "users", uid), { isBanned: !currentStatus });
-            loadData();
         }
+    });
+
+    // --- Core Functions ---
+    window.updateUI = () => {
+        if(!userData) return;
+        const now = Date.now();
+        document.getElementById('bal-text').innerText = "Rs. " + userData.bal.toLocaleString();
+        document.getElementById('p-bal').innerText = "Rs. " + userData.bal.toLocaleString();
+        document.getElementById('u-phone').innerText = userData.email;
+        document.getElementById('u-ref-code').innerText = userData.refCode;
+
+        // Mining Status
+        document.getElementById('mining-status-area').innerHTML = userData.activePlans.map(p => {
+            const days = Math.floor((now - p.startTime) / 86400000);
+            const progress = (Math.min(days, 30) / 30) * 100;
+            return `
+            <div class="mining-status-card">
+                <b>${p.name} Package</b>
+                <div class="progress-container"><div class="progress-bar" style="width:${progress}%"></div></div>
+                <small>Earned: Rs. ${Math.min(days, 30) * p.daily} | Days: ${Math.min(days, 30)}/30</small>
+            </div>`;
+        }).join('') || '<p>No active plans.</p>';
+
+        // Market
+        const plans = [
+            { name: 'Starter', cost: 1000, daily: 70, color: '#f59e0b' },
+            { name: 'Bronze', cost: 2500, daily: 180, color: '#10b981' },
+            { name: 'Silver', cost: 5000, daily: 380, color: '#8b5cf6' },
+            { name: 'Gold', cost: 10000, daily: 800, color: '#ec4899' }
+        ];
+        document.getElementById('market-list').innerHTML = plans.map(p => `
+            <div class="inv-card" style="border-left: 5px solid ${p.color}">
+                <div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div>
+                <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; background:${p.color}">Invest</button>
+            </div>`).join('');
+
+        // Transactions
+        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
+            <div class="trx-item">
+                <div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div>
+                <div>Rs. ${r.amount} <span class="status-pill">${r.status}</span></div>
+            </div>`).join('');
     };
 
-    window.processReq = async (uid, reqIndex, newStatus) => {
-        // Firestore Array එකක් ඇතුලේ තියන Object එකක් update කරන්න නම් සම්පූර්ණ array එක ගෙන edit කර නැවත යැවිය යුතුය.
-        const userRef = doc(db, "users", uid);
-        const userDoc = await getDocs(collection(db, "users")); // Simple method for small apps
-        // සටහන: මෙහිදී Array update logic එක සරල කර ඇත.
-        alert("Request " + newStatus);
+    window.buyPlan = async (cost, daily, name) => {
+        if(userData.bal < cost) return alert("Low balance");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            bal: userData.bal - cost,
+            activePlans: arrayUnion({ name, daily, startTime: Date.now() })
+        });
+        alert("Investment Successful!");
+        location.reload();
     };
 
-    window.switchTab = (tab, el) => {
-        document.getElementById('users-tab').style.display = tab === 'users' ? 'block' : 'none';
-        document.getElementById('requests-tab').style.display = tab === 'requests' ? 'block' : 'none';
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        el.classList.add('active');
+    window.getDailyBonus = async () => {
+        if(userData.bonusClaimed) return alert("Already claimed");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            bal: userData.bal + 200,
+            bonusClaimed: true
+        });
+        alert("Bonus Received!");
+        location.reload();
     };
 
-    window.closeModal = () => document.getElementById('editModal').style.display = 'none';
+    window.submitReq = async (type) => {
+        const amt = (type === 'deposit') ? document.getElementById('d-amt').value : document.getElementById('w-amt').value;
+        if(type === 'withdraw' && userData.bal < amt) return alert("Insufficient balance");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            requests: arrayUnion({ type, amount: amt, status: 'pending', time: Date.now() })
+        });
+        alert("Request Submitted!");
+        location.reload();
+    };
 
-    window.onload = loadData;
+    // --- UI Helpers ---
+    window.toggleTheme = () => document.body.classList.toggle('dark-mode');
+    window.nav = (id, el) => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
+    };
+    window.toggleBank = () => { const b = document.getElementById('bank-box'); b.style.display = b.style.display === 'block' ? 'none' : 'block'; };
+    window.copyID = () => navigator.clipboard.writeText("123456").then(() => alert("Copied!"));
+    window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
+    setTimeout(() => document.getElementById('close-btn').style.display = 'block', 5000);
 </script>
 </body>
 </html>
