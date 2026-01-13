@@ -25,28 +25,33 @@
 
         body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
 
-        /* Premium Header & Hero */
+        /* --- Custom Toast Styling --- */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 99999; pointer-events: none; }
+        .toast-card {
+            min-width: 280px; background: var(--card-bg); color: var(--primary);
+            padding: 16px 20px; border-radius: 20px; margin-bottom: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); display: flex; align-items: center;
+            border-left: 6px solid var(--secondary); transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); pointer-events: auto;
+        }
+        .toast-card.show { transform: translateX(0); }
+        .toast-card.error { border-left-color: var(--danger); }
+        .toast-card.success { border-left-color: var(--success); }
+        .toast-icon { margin-right: 15px; font-size: 20px; }
+        .toast-msg { font-size: 13px; font-weight: 600; line-height: 1.4; }
+
         .home-hero, .profile-hero {
             background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
-            padding: 50px 25px 120px;
-            border-radius: 0 0 50px 50px;
-            color: white;
-            position: relative;
-            text-align: center;
+            padding: 50px 25px 120px; border-radius: 0 0 50px 50px;
+            color: white; position: relative; text-align: center;
         }
 
         .premium-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin: -90px 25px 25px;
-            padding: 35px 20px;
-            border-radius: 35px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2);
-            color: white;
-            z-index: 10;
-            position: relative;
+            background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2); margin: -90px 25px 25px;
+            padding: 35px 20px; border-radius: 35px; text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2); color: white;
+            z-index: 10; position: relative;
         }
 
         .bal-label { font-size: 12px; letter-spacing: 2px; opacity: 0.8; font-weight: 600; }
@@ -103,6 +108,7 @@
 </head>
 <body>
 
+<div id="toast-container"></div>
 <div id="google_translate_element" style="display: none;"></div>
 
 <div id="tg-popup" class="modal-overlay">
@@ -243,10 +249,25 @@
     const db = getFirestore(app);
     let userData = null;
 
+    // Premium Toast Logic
+    window.showToast = (msg, type = 'info') => {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast-card ${type}`;
+        const icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle');
+        toast.innerHTML = `<i class="fas ${icon} toast-icon"></i><div class="toast-msg">${msg}</div>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+        }, 4000);
+    };
+
     window.googleTranslateElementInit = () => { new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element'); };
     window.setAmt = (type, val) => { document.getElementById(type + '-amt').value = val; };
     window.toggleMethod = () => { const m = document.getElementById('binance-method'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
-    window.copyID = () => { navigator.clipboard.writeText("12345678"); alert("Copied!"); };
+    window.copyID = () => { navigator.clipboard.writeText("12345678"); showToast("ID Copied to Clipboard!", "success"); };
 
     onAuthStateChanged(auth, (user) => {
         if(user) {
@@ -308,56 +329,45 @@
         if(userData.bonusClaimed) document.getElementById('bonus-btn').style.display = "none";
     };
 
-    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { alert("Login failed!"); } };
+    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { showToast("Login failed! Check credentials.", "error"); } };
     window.register = async () => {
         const e = document.getElementById('r-email').value; const p = document.getElementById('r-pass').value;
-        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); } catch(err) { alert(err.message); }
+        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); showToast("Registration Successful!", "success"); } catch(err) { showToast(err.message, "error"); }
     };
     window.logout = () => signOut(auth).then(() => location.reload());
-
-    // මූලිකව වෙනස් කරන ලද buyPlan කොටස
-    window.buyPlan = async (cost, daily, name) => {
-        if(userData.bal < cost) return alert("Insufficient balance!");
-        
+    
+    window.buyPlan = async (cost, daily, name) => { 
+        if(userData.bal < cost) return showToast("අසමත් විය! ඔබ සතුව ප්‍රමාණවත් ශේෂයක් නොමැත.", "error"); 
         const now = Date.now();
-        // දැනට සක්‍රියව පවතින එම නමම ඇති පැකේජයක් තිබේදැයි පරීක්ෂා කිරීම (දින 30ක් යනතුරු)
-        const isPlanActive = userData.activePlans.some(p => {
-            const daysPassed = (now - p.startTime) / 86400000;
-            return p.name === name && daysPassed < 30;
-        });
-
-        if(isPlanActive) {
-            return alert("මෙම පැකේජය දැනටමත් සක්‍රියයි. එය නැවත මිලදී ගැනීමට පෙර සක්‍රිය කාලය අවසන් වන තෙක් රැඳී සිටින්න.");
-        }
-
-        await updateDoc(doc(db, "users", auth.currentUser.uid), { 
-            bal: userData.bal - cost, 
-            activePlans: arrayUnion({ name, daily, startTime: now }) 
-        }); 
-        alert("Investment successful!"); 
+        const isPlanActive = userData.activePlans.some(p => p.name === name && ((now - p.startTime) / 86400000) < 30);
+        if(isPlanActive) return showToast("මෙම පැකේජය දැනටමත් සක්‍රියයි.", "error");
+        
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: now }) }); 
+        showToast(`${name} සක්‍රිය කරන ලදී!`, "success"); 
     };
     
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
-        if(!amt || !details) return alert("Please fill all details!");
+        if(!amt || !details) return showToast("කරුණාකර සියලු විස්තර පුරවන්න!", "error");
 
         const pendingDeps = userData.requests.filter(r => r.type === 'deposit' && r.status === 'pending');
         const pendingWiths = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
 
         if(type === 'deposit') {
-            if(pendingDeps.length >= 3) return alert("ඔබට එකවර තැබිය හැක්කේ Pending Deposit 3ක් පමණි.");
+            if(pendingDeps.length >= 3) return showToast("ඔබට එකවර තැබිය හැක්කේ Pending Deposit 3ක් පමණි.", "error");
         } else {
-            if(pendingWiths.length >= 1) return alert("ඔබගේ පෙර Withdrawal එක තවමත් පෙන්ඩින් මට්ටමේ පවතී.");
-            if(userData.bal < amt) return alert("Insufficient balance!");
+            if(pendingWiths.length >= 1) return showToast("ඔබගේ පෙර Withdrawal එක තවමත් පෙන්ඩින් මට්ටමේ පවතී.", "error");
+            if(userData.bal < amt) return showToast("ප්‍රමාණවත් ශේෂයක් නොමැත!", "error");
         }
 
         let up = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
         if(type === 'withdraw') up.bal = userData.bal - amt;
-        await updateDoc(doc(db, "users", auth.currentUser.uid), up); alert("සාර්ථකව යොමු කරන ලදී!");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), up); 
+        showToast("ඉල්ලීම සාර්ථකව යොමු කරන ලදී!", "success");
     };
 
-    window.getDailyBonus = async () => { if(!userData.bonusClaimed) await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); };
+    window.getDailyBonus = async () => { if(!userData.bonusClaimed) { await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); showToast("Rs. 200 Bonus Claimed!", "success"); } };
     window.nav = (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); } };
     window.toggleTheme = () => { document.body.classList.toggle('dark-mode'); document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon'; };
     window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
