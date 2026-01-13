@@ -23,12 +23,12 @@
             color: var(--primary);
         }
 
-        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s; }
+        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
 
-        /* Language Translator Style */
-        #google_translate_element { padding: 10px; text-align: center; background: var(--card-bg); border-bottom: 1px solid var(--border-color); }
+        /* Google Translator Widget Styling */
+        #google_translate_element { padding: 10px; background: var(--card-bg); border-bottom: 1px solid var(--border-color); text-align: center; }
 
-        /* Banner Slide */
+        /* Banner Slide Animation */
         .banner-container { width: calc(100% - 40px); height: 130px; overflow: hidden; position: relative; border-radius: 20px; margin: 20px auto; box-shadow: var(--card-shadow); }
         .banner-wrapper { display: flex; width: 800%; height: 100%; animation: slide 24s infinite linear; }
         .banner-slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
@@ -45,34 +45,35 @@
             100% { transform: translateX(0%); }
         }
 
-        /* Layout & UI Elements */
+        /* Header & Cards */
         .header-box { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 50px 20px 80px; border-radius: 0 0 45px 45px; text-align: center; position: relative; }
         .theme-toggle-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.15); border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .main-card { background: var(--card-bg); margin: -60px 20px 20px; padding: 25px; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; position: relative; z-index: 10; }
-        .btn-action { background: var(--secondary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 10px; }
+        .btn-action { background: var(--secondary); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
-        
-        /* Grid Selection Styles */
-        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .sel-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; color: var(--primary); font-weight: 600; cursor: pointer; font-size: 12px; }
-        .sel-btn:hover { background: var(--secondary); color: white; }
 
-        /* Binance Method Card */
-        .method-card { background: #fefce8; border: 2px dashed #f59e0b; padding: 15px; border-radius: 15px; margin-top: 15px; display: none; text-align: center; color: #92400e; }
-        .copy-box { background: #fff; padding: 8px; border-radius: 8px; border: 1px solid #fde68a; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        /* Grid for Amount Selection */
+        .amt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .amt-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; color: var(--primary); font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.3s; }
+        .amt-btn:hover { background: var(--secondary); color: white; }
 
-        .profile-card { background: linear-gradient(135deg, var(--secondary), #1d4ed8); color: white; margin: 20px; padding: 25px; border-radius: 24px; }
-        .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 20px 20px; text-align: center; }
-        .action-item { background: var(--card-bg); padding: 15px 5px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
+        /* Binance Method Display */
+        .method-display { background: #fffbeb; border: 2px dashed #f59e0b; padding: 20px; border-radius: 18px; margin-top: 20px; display: none; text-align: center; }
+        .binance-id-box { background: white; border: 1px solid #fde68a; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin: 15px 0; font-family: monospace; font-size: 18px; font-weight: bold; color: #b45309; }
+
+        /* Telegram Popup UI */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .popup-card { background: var(--card-bg); padding: 30px; border-radius: 28px; text-align: center; width: 85%; max-width: 340px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+
+        /* Navigation */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
         .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: var(--secondary); font-weight: 700; }
         .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .popup-card { background: var(--card-bg); padding: 25px; border-radius: 24px; text-align: center; width: 80%; max-width: 320px; }
+        
+        .inv-card { background: var(--card-bg); border-radius: 20px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-color); }
     </style>
 </head>
 <body>
@@ -81,31 +82,29 @@
 
 <div id="tg-popup" class="modal-overlay">
     <div class="popup-card">
-        <i class="fab fa-telegram" style="font-size: 50px; color: #0088cc; margin-bottom: 15px;"></i>
-        <h3>Join Telegram Group</h3>
-        <p style="color:var(--text-muted); font-size:14px;">Withdraw Proof බැලීමට එක්වන්න.</p>
+        <i class="fab fa-telegram" style="font-size: 60px; color: #0088cc; margin-bottom: 20px;"></i>
+        <h3 style="margin:0;">Join Telegram Group</h3>
+        <p style="color:var(--text-muted); font-size:14px; margin: 15px 0;">දිනපතා ගෙවීම් වාර්තා (Withdraw Proof) ලබාගැනීමට අපගේ නිල Telegram සමූහයට දැන්ම එක්වන්න.</p>
         <a href="https://t.me/Sky_Money_Money_Pro" target="_blank" style="text-decoration:none;"><button class="btn-action" style="background:#0088cc;">JOIN NOW</button></a>
-        <button onclick="closePopup()" id="close-btn" style="margin-top:15px; border:none; background:none; color:var(--text-muted); display:none; width:100%; cursor:pointer;">CLOSE (5s)</button>
+        <button onclick="closePopup()" id="close-btn" style="margin-top:20px; border:none; background:none; color:var(--text-muted); display:none; width:100%; cursor:pointer; font-weight:bold;">CLOSE (5s)</button>
     </div>
 </div>
 
 <div id="auth-screen">
-    <div style="text-align:center; padding: 20px; width: 100%;">
-        <h1 style="font-family:'Poppins'; color: white;">Sky Money <span style="color:var(--accent);">Pro</span></h1>
-        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; max-width: 400px; margin: 0 auto;">
+    <div style="text-align:center; padding: 20px; width: 100%; min-height: 100vh; background: #0f172a; display: flex; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 35px; border-radius: 30px; width: 100%; max-width: 380px;">
+            <h2 style="color:#0f172a; font-family:'Poppins';">Sky Money <span style="color:var(--secondary);">Pro</span></h2>
             <div id="login-form">
-                <h3>Login</h3>
                 <input type="email" id="l-email" placeholder="Email Address">
                 <input type="password" id="l-pass" placeholder="Password">
                 <button class="btn-action" onclick="login()">LOGIN</button>
-                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor: pointer;">Register Now</p>
+                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:20px; color:var(--secondary); cursor:pointer; font-weight:600;">Create an account</p>
             </div>
             <div id="reg-form" style="display:none;">
-                <h3>Register</h3>
                 <input type="email" id="r-email" placeholder="Email Address">
-                <input type="password" id="r-pass" placeholder="Password">
+                <input type="password" id="r-pass" placeholder="Create Password">
                 <button class="btn-action" onclick="register()">REGISTER</button>
-                <p onclick="toggleAuth(false)" style="font-size:12px; margin-top:15px; cursor: pointer;">Back to Login</p>
+                <p onclick="toggleAuth(false)" style="font-size:12px; margin-top:20px; cursor:pointer;">Back to Login</p>
             </div>
         </div>
     </div>
@@ -116,22 +115,20 @@
         <div class="header-box">
             <button class="theme-toggle-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
             <h2 style="font-family:'Poppins'; margin:0;">Sky Money Pro</h2>
-            <p style="font-size: 11px; opacity: 0.9;">MINING PLATFORM</p>
+            <p style="font-size: 11px; opacity: 0.8;">PREMIUM MINING HUB</p>
         </div>
-
         <div class="banner-container">
             <div class="banner-wrapper">
                 <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/digital-money-transfer-technology-background_1017-17454.jpg');"></div>
                 <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/gradient-crypto-mining-concept_23-2148914624.jpg');"></div>
             </div>
         </div>
-
         <div class="main-card">
-            <small style="color:var(--text-muted);">TOTAL BALANCE</small>
-            <h1 id="bal-text">Rs. 0</h1>
-            <button onclick="getDailyBonus()" id="bonus-btn" class="btn-action" style="width:auto; border-radius:30px;">CLAIM Rs. 200 BONUS</button>
+            <small style="color:var(--text-muted); font-weight:700;">TOTAL WALLET BALANCE</small>
+            <h1 id="bal-text" style="font-size:38px; margin:10px 0;">Rs. 0</h1>
+            <button onclick="getDailyBonus()" id="bonus-btn" class="btn-action" style="width:auto; border-radius:30px; padding: 12px 25px;">CLAIM Rs. 200 BONUS</button>
         </div>
-        <div style="padding: 0 20px;"><div id="mining-status-area"></div></div>
+        <div style="padding:0 20px;" id="mining-status-area"></div>
     </section>
 
     <section id="market" class="page">
@@ -141,38 +138,38 @@
 
     <section id="deposit" class="page">
         <div style="padding:20px;">
-            <h3>Deposit</h3>
-            <div class="selection-grid">
-                <button class="sel-btn" onclick="setAmt('d', 1000)">Rs. 1000</button>
-                <button class="sel-btn" onclick="setAmt('d', 2000)">Rs. 2000</button>
-                <button class="sel-btn" onclick="setAmt('d', 5000)">Rs. 5000</button>
+            <h3>Deposit Funds</h3>
+            <div class="amt-grid">
+                <button class="amt-btn" onclick="setAmt('d', 1000)">Rs. 1000</button>
+                <button class="amt-btn" onclick="setAmt('d', 2000)">Rs. 2000</button>
+                <button class="amt-btn" onclick="setAmt('d', 5000)">Rs. 5000</button>
             </div>
             <input type="number" id="d-amt" placeholder="Enter Amount">
-            <input type="text" id="d-txid" placeholder="Transaction ID">
+            <input type="text" id="d-txid" placeholder="Transaction ID (TXID)">
             <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit</button>
 
-            <button class="btn-action" style="background: #f59e0b;" onclick="toggleMethod()">DEPOSIT METHOD</button>
-            <div id="binance-method" class="method-card">
-                <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" width="30" style="vertical-align: middle; margin-right: 10px;">
-                <b>Binance Pay ID</b>
-                <div class="copy-box">
-                    <span id="bin-id">123456</span>
+            <button class="btn-action" style="background:#f59e0b; margin-top:20px;" onclick="toggleMethod()">DEPOSIT METHOD</button>
+            <div id="binance-method" class="method-display">
+                <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" width="40">
+                <h4 style="margin:10px 0;">Binance Pay ID</h4>
+                <div class="binance-id-box">
+                    <span id="bin-id">12345678</span>
                     <i class="fas fa-copy" style="cursor:pointer; color:var(--secondary);" onclick="copyID()"></i>
                 </div>
-                <small>මුදල් එවා එහි ID එක ඉහත කොටුවට ඇතුළත් කරන්න.</small>
+                <p style="font-size:12px; color:#92400e;">මුදල් එවා එහි සාර්ථක පණිවිඩයේ ඇති ID එක ඉහත 'Transaction ID' කොටුවේ ඇතුළත් කරන්න.</p>
             </div>
         </div>
     </section>
 
     <section id="withdraw" class="page">
         <div style="padding:20px;">
-            <h3>Withdraw</h3>
-            <div class="selection-grid">
-                <button class="sel-btn" onclick="setAmt('w', 1000)">Rs. 1000</button>
-                <button class="sel-btn" onclick="setAmt('w', 2000)">Rs. 2000</button>
-                <button class="sel-btn" onclick="setAmt('w', 3000)">Rs. 3000</button>
-                <button class="sel-btn" onclick="setAmt('w', 4000)">Rs. 4000</button>
-                <button class="sel-btn" onclick="setAmt('w', 5000)">Rs. 5000</button>
+            <h3>Withdraw Funds</h3>
+            <div class="amt-grid">
+                <button class="amt-btn" onclick="setAmt('w', 1000)">Rs. 1000</button>
+                <button class="amt-btn" onclick="setAmt('w', 2000)">Rs. 2000</button>
+                <button class="amt-btn" onclick="setAmt('w', 3000)">Rs. 3000</button>
+                <button class="amt-btn" onclick="setAmt('w', 4000)">Rs. 4000</button>
+                <button class="amt-btn" onclick="setAmt('w', 5000)">Rs. 5000</button>
             </div>
             <input type="number" id="w-amt" placeholder="Enter Amount">
             <input type="text" id="w-details" placeholder="Binance ID / Bank Details">
@@ -181,16 +178,10 @@
     </section>
 
     <section id="profile" class="page">
-        <div class="profile-card">
-            <h2 id="u-email" style="margin:0; font-size:16px;">Loading...</h2>
-            <div style="margin-top:10px;">Balance: <span id="p-bal">Rs. 0</span></div>
-            <div>Ref Code: <span id="u-ref-code">---</span></div>
-        </div>
-        <div class="action-grid">
-            <div class="action-item" onclick="nav('deposit')"><i class="fas fa-plus-circle"></i><br><small>Deposit</small></div>
-            <div class="action-item" onclick="nav('withdraw')"><i class="fas fa-wallet"></i><br><small>Withdraw</small></div>
-            <div class="action-item" onclick="nav('market')"><i class="fas fa-rocket"></i><br><small>Upgrade</small></div>
-            <div class="action-item" onclick="window.open('https://t.me/Sky_Money_Money_Pro')"><i class="fab fa-telegram"></i><br><small>Group</small></div>
+        <div style="background:var(--secondary); color:white; margin:20px; padding:25px; border-radius:24px;">
+            <h2 id="u-email" style="margin:0; font-size:16px;">User Email</h2>
+            <div style="margin-top:15px; font-size:20px; font-weight:bold;">Bal: <span id="p-bal">Rs. 0</span></div>
+            <div style="font-size:12px; opacity:0.8;">Ref: <span id="u-ref-code">---</span></div>
         </div>
         <div id="trans-history" style="padding:0 20px;"></div>
         <div style="padding:20px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT</button></div>
@@ -206,79 +197,139 @@
 </div>
 
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyA-LrdE3qEML4bk4KXnyFtoy4OQ4Of2IC4", authDomain: "sky-money-47ca1.firebaseapp.com", projectId: "sky-money-47ca1", storageBucket: "sky-money-47ca1.firebasestorage.app", messagingSenderId: "44600459064", appId: "1:44600459064:web:01cb33d3db2b009ce7cbcd" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyA-LrdE3qEML4bk4KXnyFtoy4OQ4Of2IC4", 
+        authDomain: "sky-money-47ca1.firebaseapp.com", 
+        projectId: "sky-money-47ca1", 
+        storageBucket: "sky-money-47ca1.firebasestorage.app", 
+        messagingSenderId: "44600459064", 
+        appId: "1:44600459064:web:01cb33d3db2b009ce7cbcd" 
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     let userData = null;
 
-    // --- New Features Logic ---
-    window.googleTranslateElementInit = () => { new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); };
-    window.setAmt = (type, val) => { document.getElementById(type + '-amt').value = val; };
-    window.toggleMethod = () => { const m = document.getElementById('binance-method'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
-    window.copyID = () => { navigator.clipboard.writeText("123456"); alert("Binance ID Copied!"); };
+    // --- Language & Feature Functions ---
+    window.googleTranslateElementInit = () => {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    };
 
-    // --- Firebase Logic ---
+    window.setAmt = (type, val) => { document.getElementById(type + '-amt').value = val; };
+    window.toggleMethod = () => { 
+        const m = document.getElementById('binance-method');
+        m.style.display = m.style.display === 'block' ? 'none' : 'block'; 
+    };
+    window.copyID = () => { 
+        navigator.clipboard.writeText("12345678"); 
+        alert("Binance ID Copied!"); 
+    };
+
+    // --- Firebase Auth & UI ---
     onAuthStateChanged(auth, (user) => {
         if(user) {
             onSnapshot(doc(db, "users", user.uid), (snap) => {
                 if(snap.exists()) {
                     userData = snap.data();
-                    if(userData.isBanned) { alert("Banned!"); signOut(auth); return; }
+                    if(userData.isBanned) { alert("Account Banned!"); signOut(auth); return; }
                     document.getElementById('auth-screen').style.display = 'none';
                     document.getElementById('main-app').style.display = 'block';
                     updateUI();
-                    if(!window.popupShown) { document.getElementById('tg-popup').style.display = 'flex'; setTimeout(()=>document.getElementById('close-btn').style.display='block', 5000); window.popupShown = true; }
+                    if(!window.popupShown) { 
+                        document.getElementById('tg-popup').style.display = 'flex'; 
+                        setTimeout(()=>document.getElementById('close-btn').style.display='block', 5000); 
+                        window.popupShown = true; 
+                    }
                 }
             });
         }
     });
 
-    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { alert("Login Failed!"); } };
-    window.register = async () => {
-        const e = document.getElementById('r-email').value; const p = document.getElementById('r-pass').value;
-        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false, isBanned: false }); } catch(err) { alert(err.message); }
+    window.login = async () => {
+        try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); }
+        catch(e) { alert("Login Failed: Check your credentials."); }
     };
+
+    window.register = async () => {
+        const e = document.getElementById('r-email').value;
+        const p = document.getElementById('r-pass').value;
+        try {
+            const res = await createUserWithEmailAndPassword(auth, e, p);
+            await setDoc(doc(db, "users", res.user.uid), {
+                email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), 
+                activePlans: [], requests: [], bonusClaimed: false, isBanned: false
+            });
+        } catch(err) { alert(err.message); }
+    };
+
     window.logout = () => signOut(auth).then(() => location.reload());
 
     window.updateUI = () => {
-        const now = Date.now();
         document.getElementById('bal-text').innerText = "Rs. " + userData.bal.toLocaleString();
         document.getElementById('p-bal').innerText = "Rs. " + userData.bal.toLocaleString();
         document.getElementById('u-email').innerText = userData.email;
         document.getElementById('u-ref-code').innerText = userData.refCode;
 
-        // Plans
+        // Dynamic Plans
         const plans = [
             { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
             { name: 'Plan 2', cost: 1000, daily: 25, color: '#10b981' },
-            { name: 'Plan 5', cost: 2500, daily: 100, color: '#ec4899' },
             { name: 'Plan 10', cost: 5000, daily: 330, color: '#a855f7' }
         ];
-        document.getElementById('market-list').innerHTML = plans.map(p => `<div class="inv-card" style="border-left: 5px solid ${p.color}"><div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div><button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; background:${p.color}">Invest</button></div>`).join('');
+        document.getElementById('market-list').innerHTML = plans.map(p => `
+            <div class="inv-card" style="border-left: 5px solid ${p.color}">
+                <div><b>${p.name}</b><br><small>Cost: Rs. ${p.cost}</small></div>
+                <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; padding:8px 15px; background:${p.color}">Invest</button>
+            </div>`).join('');
 
-        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `<div style="padding:10px; border-bottom:1px solid #eee;"><b>${r.type.toUpperCase()}</b> - Rs. ${r.amount} (${r.status})</div>`).reverse().join('');
+        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
+            <div style="background:var(--card-bg); padding:10px; margin-bottom:5px; border-radius:10px; border:1px solid var(--border-color);">
+                <b>${r.type.toUpperCase()}</b> - Rs. ${r.amount} (${r.status})
+            </div>`).reverse().join('');
     };
 
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
-        if(!amt || !details) return alert("Fill all details!");
+        if(!amt || !details) return alert("Please fill all information!");
         let up = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
-        if(type === 'withdraw') { if(userData.bal < amt) return alert("Low balance!"); up.bal = userData.bal - amt; }
-        await updateDoc(doc(db, "users", auth.currentUser.uid), up); alert("Submitted!");
+        if(type === 'withdraw') {
+            if(userData.bal < amt) return alert("Insufficient balance!");
+            up.bal = userData.bal - amt;
+        }
+        await updateDoc(doc(db, "users", auth.currentUser.uid), up);
+        alert("Request Submitted Successfully!");
     };
 
-    window.getDailyBonus = async () => { if(!userData.bonusClaimed) await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); else alert("Already claimed"); };
-    window.nav = (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); } };
-    window.toggleTheme = () => { document.body.classList.toggle('dark-mode'); document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon'; };
+    window.getDailyBonus = async () => {
+        if(userData.bonusClaimed) return alert("Already claimed.");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true });
+        alert("Bonus Claimed!");
+    };
+
+    window.nav = (id, el) => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
+    };
+
+    window.toggleTheme = () => {
+        document.body.classList.toggle('dark-mode');
+        document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
+    };
+
     window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
-    window.toggleAuth = (isReg) => { document.getElementById('login-form').style.display = isReg ? 'none' : 'block'; document.getElementById('reg-form').style.display = isReg ? 'block' : 'none'; };
+    window.toggleAuth = (isReg) => {
+        document.getElementById('login-form').style.display = isReg ? 'none' : 'block';
+        document.getElementById('reg-form').style.display = isReg ? 'block' : 'none';
+    };
 </script>
 </body>
 </html>
