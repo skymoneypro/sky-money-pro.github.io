@@ -25,9 +25,8 @@
 
         body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
 
-        #google_translate_element { padding: 10px; background: var(--card-bg); border-bottom: 1px solid var(--border-color); text-align: center; }
-
-        .home-hero {
+        /* Premium Header & Hero */
+        .home-hero, .profile-hero {
             background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
             padding: 50px 25px 120px;
             border-radius: 0 0 50px 50px;
@@ -36,7 +35,7 @@
             text-align: center;
         }
 
-        .balance-card-premium {
+        .premium-card {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -51,77 +50,49 @@
         }
 
         .bal-label { font-size: 12px; letter-spacing: 2px; opacity: 0.8; font-weight: 600; }
-        .bal-amount { font-size: 48px; font-weight: 700; margin: 10px 0; font-family: 'Poppins'; }
+        .bal-amount { font-size: 45px; font-weight: 700; margin: 10px 0; font-family: 'Poppins'; }
 
         .quick-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            padding: 0 25px;
-            margin-bottom: 30px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 15px; padding: 0 25px; margin-bottom: 30px;
         }
 
         .q-item {
-            background: var(--card-bg);
-            padding: 15px 5px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            transition: 0.3s;
+            background: var(--card-bg); padding: 15px 5px; border-radius: 20px;
+            text-align: center; box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
         }
         .q-item i { font-size: 22px; color: var(--secondary); margin-bottom: 8px; }
         .q-item span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
 
         .mining-card-modern {
-            background: var(--card-bg);
-            margin: 0 25px 15px;
-            padding: 20px;
-            border-radius: 25px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
+            background: var(--card-bg); margin: 0 25px 15px; padding: 20px;
+            border-radius: 25px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
+            display: flex; align-items: center;
         }
 
         .m-icon-box {
-            width: 55px; height: 55px;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
+            width: 55px; height: 55px; background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 18px; display: flex; align-items: center; justify-content: center;
             color: white; font-size: 22px; margin-right: 15px;
         }
 
         .m-progress-info { flex: 1; }
         .m-bar-bg { background: #e2e8f0; height: 8px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .m-bar-fill { background: var(--secondary); height: 100%; border-radius: 10px; transition: 1.5s; }
+        .m-bar-fill { background: var(--secondary); height: 100%; border-radius: 10px; }
 
-        .amount-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-        }
-
+        .amount-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
         .amt-pill {
-            background: var(--light);
-            border: 1px solid var(--border-color);
-            padding: 12px 5px;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--primary);
-            cursor: pointer;
-            text-align: center;
-            transition: 0.3s;
+            background: var(--light); border: 1px solid var(--border-color); padding: 12px 5px;
+            border-radius: 15px; font-size: 13px; font-weight: 700; text-align: center; cursor: pointer;
         }
-        .amt-pill:hover { background: var(--secondary); color: white; border-color: var(--secondary); }
 
-        .btn-action { background: var(--secondary); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 15px; font-size: 15px; }
+        .btn-action { background: var(--secondary); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 15px; }
         input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
+        
         .nav-bar { position: fixed; bottom: 0; width: 100%; height: 80px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; }
-        .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; transition: 0.3s; }
-        .nav-item.active { color: var(--secondary); font-weight: 700; transform: translateY(-5px); }
+        .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; }
+        .nav-item.active { color: var(--secondary); font-weight: 700; }
+
         .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -132,7 +103,7 @@
 </head>
 <body>
 
-<div id="google_translate_element"></div>
+<div id="google_translate_element" style="display: none;"></div>
 
 <div id="tg-popup" class="modal-overlay">
     <div class="popup-card">
@@ -152,7 +123,7 @@
                 <input type="email" id="l-email" placeholder="Email Address">
                 <input type="password" id="l-pass" placeholder="Password">
                 <button class="btn-action" onclick="login()">LOGIN</button>
-                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:20px; color:var(--secondary); cursor:pointer; font-weight:600;">Create Account</p>
+                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:20px; color:var(--secondary); cursor:pointer;">Create Account</p>
             </div>
             <div id="reg-form" style="display:none;">
                 <input type="email" id="r-email" placeholder="Email Address">
@@ -172,7 +143,7 @@
             <p style="font-size:12px; opacity:0.7;">Secure Cloud Mining Platform</p>
         </div>
 
-        <div class="balance-card-premium">
+        <div class="premium-card">
             <div class="bal-label">TOTAL ASSETS VALUE</div>
             <div class="bal-amount">Rs. <span id="bal-text">0</span></div>
             <button onclick="getDailyBonus()" id="bonus-btn" style="background:white; color:var(--secondary); border:none; padding:10px 25px; border-radius:30px; font-weight:700; font-size:12px; cursor:pointer;">Claim Rs. 200 Bonus</button>
@@ -186,7 +157,7 @@
         </div>
 
         <div style="padding: 0 25px;">
-            <h3 style="margin:0 0 15px; font-size:17px;">Active Status</h3>
+            <h3 style="margin:0 0 15px; font-size:17px;">Active Mining Status</h3>
             <div id="mining-status-area"></div>
         </div>
     </section>
@@ -230,21 +201,25 @@
                 <div class="amt-pill" onclick="setAmt('w', 4000)">Rs. 4000</div>
                 <div class="amt-pill" onclick="setAmt('w', 5000)">Rs. 5000</div>
             </div>
-            <input type="number" id="w-amt" placeholder="Enter withdrawal amount">
+            <input type="number" id="w-amt" placeholder="Enter amount">
             <input type="text" id="w-details" placeholder="Binance ID / Wallet Details">
             <button class="btn-action" onclick="submitReq('withdraw')">Request Withdrawal</button>
         </div>
     </section>
 
     <section id="profile" class="page">
-        <div style="background:linear-gradient(135deg, var(--secondary), #1e293b); color:white; margin:20px; padding:30px; border-radius:30px;">
-            <h2 id="u-email" style="margin:0; font-size:16px;">User Email</h2>
-            <div style="margin-top:15px; font-size:26px; font-weight:bold;">Bal: Rs. <span id="p-bal">0</span></div>
-            <div style="font-size:12px; opacity:0.8; margin-top:5px;">Code: <span id="u-ref-code">---</span></div>
+        <div class="profile-hero">
+            <h2 id="u-email" style="margin:0; font-family:'Poppins';">User Account</h2>
+            <p style="font-size:12px; opacity:0.7;">Verified Member</p>
         </div>
-        <h3 style="padding:0 25px; font-size:16px;">Activity History</h3>
+        <div class="premium-card">
+            <div class="bal-label">AVAILABLE BALANCE</div>
+            <div class="bal-amount">Rs. <span id="p-bal">0</span></div>
+            <div style="font-size:12px; opacity:0.8; margin-top:5px;">Referral Code: <span id="u-ref-code" style="font-weight:700;">---</span></div>
+        </div>
+        <h3 style="padding:0 25px; font-size:16px;">Activity & History</h3>
         <div id="trans-history" style="padding:0 25px;"></div>
-        <div style="padding:25px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT</button></div>
+        <div style="padding:25px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT ACCOUNT</button></div>
     </section>
 
     <nav class="nav-bar">
@@ -302,14 +277,15 @@
                 <div class="m-icon-box"><i class="fas fa-server"></i></div>
                 <div class="m-progress-info">
                     <div style="display:flex; justify-content:space-between; font-weight:700; font-size:14px;">
-                        <span>${p.name}</span>
+                        <span>${p.name} Mining</span>
                         <span style="color:var(--secondary)">${progress.toFixed(0)}%</span>
                     </div>
                     <div class="m-bar-bg"><div class="m-bar-fill" style="width:${progress}%"></div></div>
                 </div>
             </div>`;
-        }).join('') || '<p style="text-align:center; color:var(--text-muted); padding:20px;">No active plans.</p>';
+        }).join('') || '<p style="text-align:center; color:var(--text-muted); padding:20px;">No active mining packages.</p>';
 
+        // PLANS RE-ADJUSTED (500 - 5000)
         const plans = [
             { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
             { name: 'Plan 2', cost: 1000, daily: 25, color: '#10b981' },
@@ -322,7 +298,7 @@
             { name: 'Plan 9', cost: 4500, daily: 270, color: '#06b6d4' },
             { name: 'Plan 10', cost: 5000, daily: 330, color: '#a855f7' }
         ];
-        document.getElementById('market-list').innerHTML = plans.map(p => `<div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:15px; margin-bottom:10px; border-radius:15px; border-left:5px solid ${p.color};"><div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div><button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; padding:8px 15px; background:${p.color}; margin:0;">Invest</button></div>`).join('');
+        document.getElementById('market-list').innerHTML = plans.map(p => `<div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:15px; margin-bottom:10px; border-radius:15px; border-left:5px solid ${p.color}; box-shadow:0 4px 10px rgba(0,0,0,0.03);"><div><b>${p.name}</b><br><small>Cost: Rs. ${p.cost}</small><br><small style="color:var(--success); font-weight:700;">Daily: Rs. ${p.daily}</small></div><button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; padding:8px 15px; background:${p.color}; margin:0;">Invest</button></div>`).join('');
 
         document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
             <div style="background:var(--card-bg); padding:15px; margin-bottom:10px; border-radius:18px; display:flex; justify-content:space-between; border:1px solid var(--border-color);">
@@ -339,29 +315,26 @@
         try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); } catch(err) { alert(err.message); }
     };
     window.logout = () => signOut(auth).then(() => location.reload());
-    window.buyPlan = async (cost, daily, name) => { if(userData.bal < cost) return alert("Insufficient balance!"); await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: Date.now() }) }); alert("Investment success!"); };
+    window.buyPlan = async (cost, daily, name) => { if(userData.bal < cost) return alert("Insufficient balance!"); await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: Date.now() }) }); alert("Investment successful!"); };
     
-    // UPDATED LIMIT LOGIC
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
         if(!amt || !details) return alert("Please fill all details!");
 
-        const pendingDeposits = userData.requests.filter(r => r.type === 'deposit' && r.status === 'pending');
-        const pendingWithdrawals = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
+        const pendingDeps = userData.requests.filter(r => r.type === 'deposit' && r.status === 'pending');
+        const pendingWiths = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
 
         if(type === 'deposit') {
-            if(pendingDeposits.length >= 3) return alert("ඔබට එකවර තැබිය හැක්කේ Pending Deposit 3ක් පමණි. කරුණාකර පෙර Deposit සාර්ථක වන තෙක් සිටින්න.");
+            if(pendingDeps.length >= 3) return alert("ඔබට එකවර තැබිය හැක්කේ Pending Deposit 3ක් පමණි.");
         } else {
-            if(pendingWithdrawals.length >= 1) return alert("ඔබගේ පෙර Withdrawal එක තවමත් පෙන්ඩින් (Pending) මට්ටමේ පවතී. එය සාර්ථක වූ පසු නැවත උත්සාහ කරන්න.");
+            if(pendingWiths.length >= 1) return alert("ඔබගේ පෙර Withdrawal එක තවමත් පෙන්ඩින් මට්ටමේ පවතී.");
             if(userData.bal < amt) return alert("Insufficient balance!");
         }
 
         let up = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
         if(type === 'withdraw') up.bal = userData.bal - amt;
-        
-        await updateDoc(doc(db, "users", auth.currentUser.uid), up); 
-        alert("සාර්ථකව යොමු කරන ලදී!");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), up); alert("සාර්ථකව යොමු කරන ලදී!");
     };
 
     window.getDailyBonus = async () => { if(!userData.bonusClaimed) await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); };
