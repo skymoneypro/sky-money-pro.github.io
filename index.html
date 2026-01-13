@@ -15,10 +15,17 @@
             --text-muted: #64748b;
         }
 
-        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body.dark-mode {
+            --primary: #f8fafc; --secondary: #60a5fa; --light: #0f172a; 
+            --white: #1e293b; --card-bg: #1e293b; --input-bg: #334155; 
+            --border-color: #334155; --text-muted: #94a3b8;
+            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            color: var(--primary);
+        }
 
-        /* Premium Header & Hero */
-        .premium-hero {
+        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
+
+        .home-hero, .profile-hero {
             background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
             padding: 50px 25px 120px;
             border-radius: 0 0 50px 50px;
@@ -51,10 +58,8 @@
         .q-item {
             background: var(--card-bg); padding: 15px 5px; border-radius: 20px;
             text-align: center; box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-            cursor: pointer;
         }
         .q-item i { font-size: 22px; color: var(--secondary); margin-bottom: 8px; }
-        .q-item span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
 
         .btn-action { background: var(--secondary); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 15px; }
         input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
@@ -63,37 +68,20 @@
         .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: var(--secondary); font-weight: 700; }
 
-        .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
+        .page { display: none; padding-bottom: 110px; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Popups */
+        /* Modal Styles */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .popup-card { background: var(--white); padding: 30px; border-radius: 30px; text-align: center; width: 85%; max-width: 340px; }
-
-        .amt-pill {
-            background: var(--light); border: 1px solid var(--border-color); padding: 12px 5px;
-            border-radius: 15px; font-size: 13px; font-weight: 700; text-align: center; cursor: pointer;
-        }
-        .amount-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .popup-card { background: var(--card-bg); padding: 30px; border-radius: 30px; text-align: center; width: 85%; max-width: 340px; }
     </style>
 </head>
 <body>
 
-<div id="tg-popup" class="modal-overlay">
-    <div class="popup-card">
-        <i class="fab fa-telegram" style="font-size: 60px; color: #0088cc; margin-bottom: 20px;"></i>
-        <h3 style="margin:0;">Join Telegram</h3>
-        <p style="color:var(--text-muted); font-size:14px; margin:15px 0;">දිනපතා Withdrawal Proof ලබා ගැනීමට සහ සහය ලබා ගැනීමට අපගේ Telegram සමූහයට එක්වන්න.</p>
-        <a href="https://t.me/Sky_Money_Money_Pro" target="_blank" style="text-decoration:none;"><button class="btn-action" style="background:#0088cc;">JOIN NOW</button></a>
-        <button onclick="closePopup()" id="close-btn" style="margin-top:20px; border:none; background:none; color:var(--text-muted); display:none; width:100%; cursor:pointer; font-weight:bold;">CLOSE (5s)</button>
-    </div>
-</div>
-
 <div id="auth-screen">
     <div style="text-align:center; padding: 20px; min-height: 100vh; background: #0f172a; display: flex; align-items: center; justify-content: center;">
         <div style="background: white; padding: 40px; border-radius: 35px; width: 100%; max-width: 380px;">
-            <h2 style="color:#0f172a; font-family:'Poppins';">Sky Money <span style="color:var(--secondary);">Pro</span></h2>
+            <h2 style="color:#0f172a;">Sky Money Pro</h2>
             <div id="login-form">
                 <input type="email" id="l-email" placeholder="Email Address">
                 <input type="password" id="l-pass" placeholder="Password">
@@ -113,14 +101,13 @@
 
 <div id="main-app" style="display:none;">
     <section id="home" class="page active">
-        <div class="premium-hero">
-            <h2 style="margin:0; font-family:'Poppins';">Sky Money Pro</h2>
-            <p style="font-size:12px; opacity:0.7;">Secure Cloud Mining</p>
+        <div class="home-hero">
+            <h2 style="margin:0;">Sky Money Pro</h2>
         </div>
         <div class="premium-card">
-            <div style="font-size:12px; letter-spacing:1px;">TOTAL ASSETS</div>
+            <div style="font-size:12px;">TOTAL BALANCE</div>
             <div class="bal-amount">Rs. <span id="bal-text">0</span></div>
-            <button onclick="getDailyBonus()" id="bonus-btn" style="background:white; color:var(--secondary); border:none; padding:10px 20px; border-radius:20px; font-weight:700;">Claim Rs. 200 Bonus</button>
+            <button onclick="getDailyBonus()" id="bonus-btn" style="background:white; color:var(--secondary); border:none; padding:10px 20px; border-radius:20px; font-weight:700;">Claim Rs. 200</button>
         </div>
         <div class="quick-nav-grid">
             <div class="q-item" onclick="nav('deposit')"><i class="fas fa-plus-circle"></i><br><span>Deposit</span></div>
@@ -135,47 +122,28 @@
         <div style="padding: 0 20px;" id="market-list"></div>
     </section>
 
-    <section id="deposit" class="page">
-        <div style="padding:20px;">
-            <h3>Deposit Funds</h3>
-            <div class="amount-selector">
-                <div class="amt-pill" onclick="setAmt('d', 1000)">Rs. 1000</div>
-                <div class="amt-pill" onclick="setAmt('d', 2000)">Rs. 2000</div>
-                <div class="amt-pill" onclick="setAmt('d', 5000)">Rs. 5000</div>
-            </div>
-            <input type="number" id="d-amt" placeholder="Enter Amount">
-            <input type="text" id="d-txid" placeholder="Transaction ID (TXID)">
-            <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit</button>
-            <div style="margin-top:20px; padding:20px; border:2px dashed var(--secondary); border-radius:20px; text-align:center;">
-                <p>Binance Pay ID</p>
-                <b style="font-size:18px;">12345678</b>
-            </div>
-        </div>
-    </section>
-
     <section id="withdraw" class="page">
         <div style="padding:20px;">
             <h3>Withdraw (Rs. 1500 - 5000)</h3>
-            <input type="number" id="w-amt" placeholder="Enter Amount">
-            <input type="text" id="w-details" placeholder="Binance ID / Wallet Details">
-            <button class="btn-action" onclick="submitReq('withdraw')">Request Withdrawal</button>
+            <input type="number" id="w-amt" placeholder="Amount (Min 1500)">
+            <input type="text" id="w-details" placeholder="Binance ID / Wallet">
+            <button class="btn-action" onclick="submitReq('withdraw')">Withdraw Now</button>
         </div>
     </section>
 
     <section id="profile" class="page">
-        <div class="premium-hero">
-            <h2 id="u-email" style="margin:0; font-size:16px;">User Profile</h2>
+        <div class="profile-hero">
+            <h2 id="u-email" style="margin:0;">User Profile</h2>
         </div>
         <div class="premium-card">
             <div style="font-size:12px;">AVAILABLE BALANCE</div>
             <div class="bal-amount">Rs. <span id="p-bal">0</span></div>
-            <div style="font-size:12px; opacity:0.8;">My Referral: <span id="u-ref-display" style="font-weight:700;">---</span></div>
         </div>
         <div style="padding: 0 25px;">
-            <button class="btn-action" onclick="openInvite()" style="background:var(--success);"><i class="fas fa-share-alt"></i> INVITE & EARN RS. 100</button>
-            <h3 style="margin-top:25px;">History</h3>
+            <button class="btn-action" onclick="openInvite()" style="background:var(--success);"><i class="fas fa-share-alt"></i> INVITE FRIENDS (EARN RS.100)</button>
+            <h3 style="margin-top:20px;">History</h3>
             <div id="trans-history"></div>
-            <button class="btn-action" style="background:var(--danger);" onclick="logout()">LOGOUT</button>
+            <button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT</button>
         </div>
     </section>
 
@@ -183,17 +151,16 @@
         <div class="popup-card">
             <i class="fas fa-gift" style="font-size: 50px; color: #f59e0b; margin-bottom: 15px;"></i>
             <h3>Invite & Earn</h3>
-            <p style="font-size:13px;">යහළුවෙකුට ආරාධනා කළහොත් ඔබට රු. 100 ක් සහ යහළුවාට රු. 50 ක් හිමිවේ.</p>
-            <div style="background:var(--light); padding:10px; border-radius:10px; margin:15px 0; font-weight:700;" id="ref-modal-code">---</div>
+            <p style="font-size:13px; color:var(--text-muted);">ඔබගේ යහළුවන්ව සම්බන්ධ කර එක් අයෙකුගෙන් රු. 100 බැගින් ලබාගන්න. (යහළුවාට රු. 50 ක් හිමිවේ)</p>
+            <div style="background:var(--light); padding:10px; border-radius:10px; margin:15px 0; font-weight:700;" id="ref-display">---</div>
             <button class="btn-action" onclick="copyRef()">COPY LINK</button>
-            <button onclick="closeInvite()" style="margin-top:15px; border:none; background:none; cursor:pointer;">Close</button>
+            <button onclick="closeInvite()" style="margin-top:15px; border:none; background:none; cursor:pointer; color:var(--text-muted);">Close</button>
         </div>
     </div>
 
     <nav class="nav-bar">
         <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i><br>Home</div>
         <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-rocket"></i><br>Market</div>
-        <div class="nav-item" onclick="nav('deposit', this)"><i class="fas fa-plus-circle"></i><br>Deposit</div>
         <div class="nav-item" onclick="nav('withdraw', this)"><i class="fas fa-wallet"></i><br>Withdraw</div>
         <div class="nav-item" onclick="nav('profile', this)"><i class="fas fa-user-circle"></i><br>Profile</div>
     </nav>
@@ -218,11 +185,6 @@
                     document.getElementById('auth-screen').style.display = 'none';
                     document.getElementById('main-app').style.display = 'block';
                     updateUI();
-                    if(!window.popupShown) { 
-                        setTimeout(() => { document.getElementById('tg-popup').style.display = 'flex'; }, 2000);
-                        setTimeout(() => { document.getElementById('close-btn').style.display = 'block'; }, 7000);
-                        window.popupShown = true; 
-                    }
                 }
             });
         }
@@ -232,74 +194,69 @@
         document.getElementById('bal-text').innerText = userData.bal;
         document.getElementById('p-bal').innerText = userData.bal;
         document.getElementById('u-email').innerText = userData.email;
-        document.getElementById('u-ref-display').innerText = userData.refCode;
-        document.getElementById('ref-modal-code').innerText = userData.refCode;
-
+        document.getElementById('ref-display').innerText = userData.refCode;
+        
+        // Plans (500-5000)
         const plans = [
-            { name: 'Starter', cost: 500, daily: 10, color: '#f59e0b' },
-            { name: 'Premium', cost: 5000, daily: 330, color: '#a855f7' }
+            { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
+            { name: 'Plan 2', cost: 1000, daily: 25, color: '#10b981' },
+            { name: 'Plan 3', cost: 5000, daily: 330, color: '#a855f7' }
         ];
         document.getElementById('market-list').innerHTML = plans.map(p => `<div style="background:white; padding:15px; margin-bottom:10px; border-radius:15px; border-left:5px solid ${p.color}; display:flex; justify-content:space-between; align-items:center;"><div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div><button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" style="background:${p.color}; color:white; border:none; padding:8px 15px; border-radius:10px;">Invest</button></div>`).join('');
-
-        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
-            <div style="background:white; padding:15px; margin-bottom:10px; border-radius:15px; display:flex; justify-content:space-between; border:1px solid #eee;">
-                <div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div>
-                <div style="text-align:right;">Rs. ${r.amount}<br><small style="color:${r.status==='pending'?'#f59e0b':'#10b981'}">${r.status.toUpperCase()}</small></div>
-            </div>`).reverse().join('');
-        
-        if(userData.bonusClaimed) document.getElementById('bonus-btn').style.display = "none";
     };
 
     window.register = async () => {
-        const e = document.getElementById('r-email').value;
-        const p = document.getElementById('r-pass').value;
-        const ref = document.getElementById('r-ref').value;
+        const email = document.getElementById('r-email').value;
+        const pass = document.getElementById('r-pass').value;
+        const refCodeInput = document.getElementById('r-ref').value;
         const myRef = "SKY" + Math.floor(1000 + Math.random() * 9000);
+
         try {
-            const res = await createUserWithEmailAndPassword(auth, e, p);
+            const res = await createUserWithEmailAndPassword(auth, email, pass);
             let startBal = 0;
-            if(ref) {
-                const q = query(collection(db, "users"), where("refCode", "==", ref));
+
+            if(refCodeInput) {
+                const q = query(collection(db, "users"), where("refCode", "==", refCodeInput));
                 const qSnap = await getDocs(q);
                 if(!qSnap.empty) {
-                    await updateDoc(doc(db, "users", qSnap.docs[0].id), { bal: qSnap.docs[0].data().bal + 100 });
-                    startBal = 50;
+                    const referrer = qSnap.docs[0];
+                    await updateDoc(doc(db, "users", referrer.id), { bal: referrer.data().bal + 100 });
+                    startBal = 50; // New user gets 50
                 }
             }
-            await setDoc(doc(db, "users", res.user.uid), { email: e, bal: startBal, refCode: myRef, requests: [], activePlans: [], bonusClaimed: false });
-        } catch(err) { alert(err.message); }
+
+            await setDoc(doc(db, "users", res.user.uid), { email, bal: startBal, refCode: myRef, activePlans: [], requests: [] });
+        } catch(e) { alert(e.message); }
     };
 
     window.submitReq = async (type) => {
-        const amt = parseInt(document.getElementById(type==='deposit'?'d-amt':'w-amt').value);
-        const details = document.getElementById(type==='deposit'?'d-txid':'w-details').value;
-        if(!amt || !details) return alert("Fill all fields!");
-
-        const pDeps = userData.requests.filter(r => r.type === 'deposit' && r.status === 'pending');
-        const pWiths = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
-
-        if(type === 'deposit') {
-            if(pDeps.length >= 3) return alert("Pending deposits 3කට වඩා කළ නොහැක.");
-        } else {
-            if(amt < 1500 || amt > 5000) return alert("Withdraw limit Rs. 1500 - 5000!");
-            if(pWiths.length >= 1) return alert("පෙර Withdrawal එක පෙන්ඩින් මට්ටමේ පවතී.");
-            if(userData.bal < amt) return alert("Insufficient balance!");
+        const amt = parseInt(document.getElementById('w-amt').value);
+        if(type === 'withdraw') {
+            if(amt < 1500 || amt > 5000) return alert("මුදල් ලබාගත හැක්කේ රු. 1500 ත් 5000 ත් අතර පමණි.");
+            if(userData.bal < amt) return alert("ප්‍රමාණවත් ශේෂයක් නොමැත.");
+            const pending = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
+            if(pending.length > 0) return alert("ඔබේ පෙර Withdrawal එකක් තවමත් පෙන්ඩින් මට්ටමේ පවතී.");
+            
+            await updateDoc(doc(db, "users", auth.currentUser.uid), { 
+                bal: userData.bal - amt,
+                requests: arrayUnion({ type, amount: amt, status: 'pending', time: Date.now() }) 
+            });
+            alert("සාර්ථකව යොමු කරන ලදී!");
         }
+    };
 
-        let up = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
-        if(type === 'withdraw') up.bal = userData.bal - amt;
-        await updateDoc(doc(db, "users", auth.currentUser.uid), up); alert("Submitted!");
+    window.openInvite = () => document.getElementById('invite-modal').style.display = 'flex';
+    window.closeInvite = () => document.getElementById('invite-modal').style.display = 'none';
+    window.copyRef = () => {
+        const link = window.location.origin + "?ref=" + userData.refCode;
+        navigator.clipboard.writeText("My Code: " + userData.refCode + " | Link: " + link);
+        alert("Referral link copied!");
     };
 
     window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { alert("Login failed!"); } };
     window.logout = () => signOut(auth).then(() => location.reload());
     window.nav = (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); } };
-    window.toggleAuth = (r) => { document.getElementById('login-form').style.display = r?'none':'block'; document.getElementById('reg-form').style.display = r?'block':'none'; };
-    window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
-    window.openInvite = () => document.getElementById('invite-modal').style.display = 'flex';
-    window.closeInvite = () => document.getElementById('invite-modal').style.display = 'none';
-    window.setAmt = (t, v) => document.getElementById(t+'-amt').value = v;
-    window.getDailyBonus = async () => { if(!userData.bonusClaimed) await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); };
+    window.toggleAuth = (reg) => { document.getElementById('login-form').style.display = reg?'none':'block'; document.getElementById('reg-form').style.display = reg?'block':'none'; };
 </script>
 </body>
 </html>
