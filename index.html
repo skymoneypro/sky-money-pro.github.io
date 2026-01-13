@@ -25,7 +25,7 @@
 
         body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
 
-        /* --- Custom Toast Styling --- */
+        /* Custom Toast Styling */
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 99999; pointer-events: none; }
         .toast-card {
             min-width: 280px; background: var(--card-bg); color: var(--primary);
@@ -54,51 +54,41 @@
             z-index: 10; position: relative;
         }
 
+        /* Profile UI Specific */
+        .profile-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 25px; margin-top: -10px; }
+        .stat-box { background: var(--card-bg); padding: 20px; border-radius: 25px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; }
+        .stat-box i { font-size: 20px; color: var(--secondary); margin-bottom: 10px; }
+        .stat-box span { display: block; font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .stat-box b { font-size: 16px; color: var(--primary); }
+
+        .history-card { background: var(--card-bg); margin: 8px 25px; padding: 15px 20px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .hist-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 18px; }
+
         .bal-label { font-size: 12px; letter-spacing: 2px; opacity: 0.8; font-weight: 600; }
         .bal-amount { font-size: 45px; font-weight: 700; margin: 10px 0; font-family: 'Poppins'; }
 
-        .quick-nav-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 15px; padding: 0 25px; margin-bottom: 30px;
-        }
-
-        .q-item {
-            background: var(--card-bg); padding: 15px 5px; border-radius: 20px;
-            text-align: center; box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-        }
+        .quick-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 0 25px; margin-bottom: 30px; }
+        .q-item { background: var(--card-bg); padding: 15px 5px; border-radius: 20px; text-align: center; box-shadow: var(--card-shadow); border: 1px solid var(--border-color); }
         .q-item i { font-size: 22px; color: var(--secondary); margin-bottom: 8px; }
         .q-item span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
 
-        .mining-card-modern {
-            background: var(--card-bg); margin: 0 25px 15px; padding: 20px;
-            border-radius: 25px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-            display: flex; align-items: center;
-        }
+        /* Larger Navigation Bar */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 85px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 25px rgba(0,0,0,0.08); z-index: 1000; border-radius: 25px 25px 0 0; }
+        .nav-item { color: var(--text-muted); text-align: center; font-size: 12px; cursor: pointer; transition: 0.3s; flex: 1; }
+        .nav-item i { font-size: 24px; margin-bottom: 5px; transition: 0.3s; }
+        .nav-item.active { color: var(--secondary); font-weight: 700; }
+        .nav-item.active i { transform: translateY(-5px); font-size: 26px; }
 
-        .m-icon-box {
-            width: 55px; height: 55px; background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 22px; margin-right: 15px;
-        }
-
+        .mining-card-modern { background: var(--card-bg); margin: 0 25px 15px; padding: 20px; border-radius: 25px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color); display: flex; align-items: center; }
+        .m-icon-box { width: 55px; height: 55px; background: linear-gradient(135deg, var(--secondary), var(--accent)); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; margin-right: 15px; }
         .m-progress-info { flex: 1; }
         .m-bar-bg { background: #e2e8f0; height: 8px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .m-bar-fill { background: var(--secondary); height: 100%; border-radius: 10px; }
 
-        .amount-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .amt-pill {
-            background: var(--light); border: 1px solid var(--border-color); padding: 12px 5px;
-            border-radius: 15px; font-size: 13px; font-weight: 700; text-align: center; cursor: pointer;
-        }
-
         .btn-action { background: var(--secondary); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 15px; }
         input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
         
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 80px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; }
-        .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; }
-        .nav-item.active { color: var(--secondary); font-weight: 700; }
-
-        .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
+        .page { display: none; padding-bottom: 120px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -148,24 +138,18 @@
             <h2 style="margin:0; font-family:'Poppins';">Sky Money Pro</h2>
             <p style="font-size:12px; opacity:0.7;">Secure Cloud Mining Platform</p>
         </div>
-
         <div class="premium-card">
             <div class="bal-label">TOTAL ASSETS VALUE</div>
             <div class="bal-amount">Rs. <span id="bal-text">0</span></div>
             <button onclick="getDailyBonus()" id="bonus-btn" style="background:white; color:var(--secondary); border:none; padding:10px 25px; border-radius:30px; font-weight:700; font-size:12px; cursor:pointer;">Claim Rs. 200 Bonus</button>
         </div>
-
         <div class="quick-nav-grid">
             <div class="q-item" onclick="nav('deposit')"><i class="fas fa-plus-circle"></i><br><span>Deposit</span></div>
             <div class="q-item" onclick="nav('withdraw')"><i class="fas fa-wallet"></i><br><span>Withdraw</span></div>
             <div class="q-item" onclick="nav('market')"><i class="fas fa-rocket"></i><br><span>Mining</span></div>
             <div class="q-item" onclick="window.open('https://t.me/Sky_Money_Money_Pro')"><i class="fab fa-telegram-plane"></i><br><span>Support</span></div>
         </div>
-
-        <div style="padding: 0 25px;">
-            <h3 style="margin:0 0 15px; font-size:17px;">Active Mining Status</h3>
-            <div id="mining-status-area"></div>
-        </div>
+        <div style="padding: 0 25px;"><h3 style="margin:0 0 15px; font-size:17px;">Active Mining Status</h3><div id="mining-status-area"></div></div>
     </section>
 
     <section id="market" class="page">
@@ -180,7 +164,6 @@
                 <div class="amt-pill" onclick="setAmt('d', 1000)">Rs. 1000</div>
                 <div class="amt-pill" onclick="setAmt('d', 2000)">Rs. 2000</div>
                 <div class="amt-pill" onclick="setAmt('d', 3000)">Rs. 3000</div>
-                <div class="amt-pill" onclick="setAmt('d', 4000)">Rs. 4000</div>
                 <div class="amt-pill" onclick="setAmt('d', 5000)">Rs. 5000</div>
             </div>
             <input type="number" id="d-amt" placeholder="Enter amount">
@@ -200,13 +183,6 @@
     <section id="withdraw" class="page">
         <div style="padding:20px;">
             <h3>Withdraw Funds</h3>
-            <div class="amount-selector">
-                <div class="amt-pill" onclick="setAmt('w', 1000)">Rs. 1000</div>
-                <div class="amt-pill" onclick="setAmt('w', 2000)">Rs. 2000</div>
-                <div class="amt-pill" onclick="setAmt('w', 3000)">Rs. 3000</div>
-                <div class="amt-pill" onclick="setAmt('w', 4000)">Rs. 4000</div>
-                <div class="amt-pill" onclick="setAmt('w', 5000)">Rs. 5000</div>
-            </div>
             <input type="number" id="w-amt" placeholder="Enter amount">
             <input type="text" id="w-details" placeholder="Binance ID / Wallet Details">
             <button class="btn-action" onclick="submitReq('withdraw')">Request Withdrawal</button>
@@ -215,24 +191,27 @@
 
     <section id="profile" class="page">
         <div class="profile-hero">
-            <h2 id="u-email" style="margin:0; font-family:'Poppins';">User Account</h2>
-            <p style="font-size:12px; opacity:0.7;">Verified Member</p>
+            <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 35px; margin-bottom: 15px; border: 2px solid white;"><i class="fas fa-user"></i></div>
+            <h2 id="u-email" style="margin:0; font-family:'Poppins'; font-size: 18px;">User Account</h2>
+            <p style="font-size:12px; opacity:0.8;">Premium Member Since 2024</p>
         </div>
-        <div class="premium-card">
-            <div class="bal-label">AVAILABLE BALANCE</div>
-            <div class="bal-amount">Rs. <span id="p-bal">0</span></div>
-            <div style="font-size:12px; opacity:0.8; margin-top:5px;">Referral Code: <span id="u-ref-code" style="font-weight:700;">---</span></div>
+        
+        <div class="profile-stat-grid">
+            <div class="stat-box"><i class="fas fa-wallet"></i><span>Total Balance</span><b>Rs. <span id="p-bal">0</span></b></div>
+            <div class="stat-box"><i class="fas fa-share-alt"></i><span>Ref Code</span><b><span id="u-ref-code">---</span></b></div>
         </div>
-        <h3 style="padding:0 25px; font-size:16px;">Activity & History</h3>
-        <div id="trans-history" style="padding:0 25px;"></div>
-        <div style="padding:25px;"><button class="btn-action" style="background:#ef4444;" onclick="logout()">LOGOUT ACCOUNT</button></div>
+
+        <h3 style="padding:25px 25px 10px; font-size:16px;">Transaction History</h3>
+        <div id="trans-history"></div>
+        
+        <div style="padding:25px;"><button class="btn-action" style="background:#ef4444; border-radius: 20px;" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT ACCOUNT</button></div>
     </section>
 
     <nav class="nav-bar">
         <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i><br>Home</div>
-        <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-rocket"></i><br>Market</div>
-        <div class="nav-item" onclick="nav('deposit', this)"><i class="fas fa-plus-circle"></i><br>Deposit</div>
-        <div class="nav-item" onclick="nav('withdraw', this)"><i class="fas fa-wallet"></i><br>Withdraw</div>
+        <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-chart-line"></i><br>Market</div>
+        <div class="nav-item" onclick="nav('deposit', this)"><i class="fas fa-arrow-down"></i><br>Deposit</div>
+        <div class="nav-item" onclick="nav('withdraw', this)"><i class="fas fa-arrow-up"></i><br>Withdraw</div>
         <div class="nav-item" onclick="nav('profile', this)"><i class="fas fa-user-circle"></i><br>Profile</div>
     </nav>
 </div>
@@ -249,7 +228,6 @@
     const db = getFirestore(app);
     let userData = null;
 
-    // Premium Toast Logic
     window.showToast = (msg, type = 'info') => {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -258,16 +236,13 @@
         toast.innerHTML = `<i class="fas ${icon} toast-icon"></i><div class="toast-msg">${msg}</div>`;
         container.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 100);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 500);
-        }, 4000);
+        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); }, 4000);
     };
 
     window.googleTranslateElementInit = () => { new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element'); };
     window.setAmt = (type, val) => { document.getElementById(type + '-amt').value = val; };
     window.toggleMethod = () => { const m = document.getElementById('binance-method'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
-    window.copyID = () => { navigator.clipboard.writeText("12345678"); showToast("ID Copied to Clipboard!", "success"); };
+    window.copyID = () => { navigator.clipboard.writeText("12345678"); showToast("ID Copied!", "success"); };
 
     onAuthStateChanged(auth, (user) => {
         if(user) {
@@ -293,18 +268,8 @@
         document.getElementById('mining-status-area').innerHTML = userData.activePlans.map(p => {
             const days = Math.floor((now - p.startTime) / 86400000);
             const progress = (Math.min(days, 30) / 30) * 100;
-            return `
-            <div class="mining-card-modern">
-                <div class="m-icon-box"><i class="fas fa-server"></i></div>
-                <div class="m-progress-info">
-                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:14px;">
-                        <span>${p.name} Mining</span>
-                        <span style="color:var(--secondary)">${progress.toFixed(0)}%</span>
-                    </div>
-                    <div class="m-bar-bg"><div class="m-bar-fill" style="width:${progress}%"></div></div>
-                </div>
-            </div>`;
-        }).join('') || '<p style="text-align:center; color:var(--text-muted); padding:20px;">No active mining packages.</p>';
+            return `<div class="mining-card-modern"><div class="m-icon-box"><i class="fas fa-server"></i></div><div class="m-progress-info"><div style="display:flex; justify-content:space-between; font-weight:700; font-size:14px;"><span>${p.name}</span><span style="color:var(--secondary)">${progress.toFixed(0)}%</span></div><div class="m-bar-bg"><div class="m-bar-fill" style="width:${progress}%"></div></div></div></div>`;
+        }).join('') || '<p style="text-align:center; color:var(--text-muted); padding:20px;">No active plans.</p>';
 
         const plans = [
             { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
@@ -320,54 +285,41 @@
         ];
         document.getElementById('market-list').innerHTML = plans.map(p => `<div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:15px; margin-bottom:10px; border-radius:15px; border-left:5px solid ${p.color}; box-shadow:0 4px 10px rgba(0,0,0,0.03);"><div><b>${p.name}</b><br><small>Cost: Rs. ${p.cost}</small><br><small style="color:var(--success); font-weight:700;">Daily: Rs. ${p.daily}</small></div><button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; padding:8px 15px; background:${p.color}; margin:0;">Invest</button></div>`).join('');
 
-        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
-            <div style="background:var(--card-bg); padding:15px; margin-bottom:10px; border-radius:18px; display:flex; justify-content:space-between; border:1px solid var(--border-color);">
-                <div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div>
-                <div style="text-align:right;">Rs. ${r.amount}<br><small style="color:${r.status==='pending'?'#f59e0b':'#10b981'}">${r.status.toUpperCase()}</small></div>
-            </div>`).reverse().join('');
+        document.getElementById('trans-history').innerHTML = userData.requests.map(r => {
+            const icon = r.type === 'deposit' ? 'fa-plus' : 'fa-minus';
+            const color = r.type === 'deposit' ? '#10b981' : '#f43f5e';
+            return `<div class="history-card"><div style="display:flex; align-items:center;"><div class="hist-icon" style="background:${color}20; color:${color}"><i class="fas ${icon}"></i></div><div><b>${r.type.toUpperCase()}</b><br><small>${new Date(r.time).toLocaleDateString()}</small></div></div><div style="text-align:right;"><b>Rs. ${r.amount}</b><br><small style="color:${r.status==='pending'?'#f59e0b':'#10b981'}">${r.status.toUpperCase()}</small></div></div>`;
+        }).reverse().join('') || '<p style="text-align:center; padding:20px; color:var(--text-muted);">No history found.</p>';
         
         if(userData.bonusClaimed) document.getElementById('bonus-btn').style.display = "none";
     };
 
-    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { showToast("Login failed! Check credentials.", "error"); } };
+    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { showToast("Login failed!", "error"); } };
     window.register = async () => {
         const e = document.getElementById('r-email').value; const p = document.getElementById('r-pass').value;
-        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); showToast("Registration Successful!", "success"); } catch(err) { showToast(err.message, "error"); }
+        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); } catch(err) { showToast(err.message, "error"); }
     };
     window.logout = () => signOut(auth).then(() => location.reload());
     
     window.buyPlan = async (cost, daily, name) => { 
-        if(userData.bal < cost) return showToast("අසමත් විය! ඔබ සතුව ප්‍රමාණවත් ශේෂයක් නොමැත.", "error"); 
+        if(userData.bal < cost) return showToast("Insufficient balance!", "error"); 
         const now = Date.now();
         const isPlanActive = userData.activePlans.some(p => p.name === name && ((now - p.startTime) / 86400000) < 30);
-        if(isPlanActive) return showToast("මෙම පැකේජය දැනටමත් සක්‍රියයි.", "error");
-        
+        if(isPlanActive) return showToast("This plan is already active!", "error");
         await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: now }) }); 
-        showToast(`${name} සක්‍රිය කරන ලදී!`, "success"); 
+        showToast("Investment successful!", "success"); 
     };
     
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
-        if(!amt || !details) return showToast("කරුණාකර සියලු විස්තර පුරවන්න!", "error");
-
-        const pendingDeps = userData.requests.filter(r => r.type === 'deposit' && r.status === 'pending');
-        const pendingWiths = userData.requests.filter(r => r.type === 'withdraw' && r.status === 'pending');
-
-        if(type === 'deposit') {
-            if(pendingDeps.length >= 3) return showToast("ඔබට එකවර තැබිය හැක්කේ Pending Deposit 3ක් පමණි.", "error");
-        } else {
-            if(pendingWiths.length >= 1) return showToast("ඔබගේ පෙර Withdrawal එක තවමත් පෙන්ඩින් මට්ටමේ පවතී.", "error");
-            if(userData.bal < amt) return showToast("ප්‍රමාණවත් ශේෂයක් නොමැත!", "error");
-        }
-
-        let up = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
-        if(type === 'withdraw') up.bal = userData.bal - amt;
-        await updateDoc(doc(db, "users", auth.currentUser.uid), up); 
-        showToast("ඉල්ලීම සාර්ථකව යොමු කරන ලදී!", "success");
+        if(!amt || !details) return showToast("Fill all details!", "error");
+        if(type === 'withdraw' && userData.bal < amt) return showToast("Insufficient balance!", "error");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }), bal: type==='withdraw' ? userData.bal - amt : userData.bal }); 
+        showToast("Request submitted!", "success");
     };
 
-    window.getDailyBonus = async () => { if(!userData.bonusClaimed) { await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); showToast("Rs. 200 Bonus Claimed!", "success"); } };
+    window.getDailyBonus = async () => { if(!userData.bonusClaimed) { await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); showToast("Bonus Claimed!", "success"); } };
     window.nav = (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); } };
     window.toggleTheme = () => { document.body.classList.toggle('dark-mode'); document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon'; };
     window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
