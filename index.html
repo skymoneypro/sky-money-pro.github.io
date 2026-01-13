@@ -3,103 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Money Pro | Premium Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <title>Sky Money Pro | Ultimate Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0f172a; --secondary: #2563eb; --accent: #38bdf8;
+            --primary: #0f172a; --secondary: #3b82f6; --accent: #00d2ff;
             --light: #f8fafc; --white: #ffffff; --success: #10b981; --danger: #f43f5e;
             --card-bg: #ffffff; --input-bg: #f1f5f9; --border-color: #e2e8f0;
-            --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
-            --text-muted: #64748b; --nav-bg: #ffffff;
+            --text-muted: #64748b;
+            --grad: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
 
         body.dark-mode {
-            --primary: #f8fafc; --secondary: #60a5fa; --light: #0f172a; 
-            --white: #1e293b; --card-bg: #1e293b; --input-bg: #334155; 
-            --border-color: #334155; --text-muted: #94a3b8; --nav-bg: #1e293b;
-            --card-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
-            color: var(--primary);
+            --primary: #f8fafc; --secondary: #60a5fa; --light: #020617; 
+            --white: #1e293b; --card-bg: #0f172a; --input-bg: #1e293b; 
+            --border-color: #334155; --text-muted: #94a3b8;
         }
 
-        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.3s; }
+        body { 
+            margin: 0; background: var(--light); color: var(--primary); 
+            font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s;
+            -webkit-user-select: none; user-select: none;
+        }
 
-        /* Toast & General UI */
+        /* Toast UI */
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 99999; }
-        .toast-card { min-width: 250px; background: var(--card-bg); padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: var(--card-shadow); border-left: 5px solid var(--secondary); display: flex; align-items: center; transform: translateX(120%); transition: 0.4s; }
+        .toast-card { 
+            min-width: 250px; background: var(--card-bg); padding: 15px 20px; 
+            border-radius: 20px; margin-bottom: 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+            border-left: 6px solid var(--secondary); display: flex; align-items: center; 
+            transform: translateX(120%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
         .toast-card.show { transform: translateX(0); }
 
-        /* Hero Sections */
-        .home-hero, .profile-hero {
-            background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
-            padding: 60px 25px 130px; border-radius: 0 0 45px 45px;
-            color: white; text-align: center; position: relative;
+        /* Super Home Hero */
+        .home-hero {
+            background: radial-gradient(circle at top right, #3b82f6, #0f172a);
+            padding: 50px 25px 140px; border-radius: 0 0 60px 60px;
+            color: white; position: relative; overflow: hidden;
+        }
+        .home-hero::after {
+            content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px;
+            background: rgba(255,255,255,0.1); border-radius: 50%; blur: 50px;
         }
 
-        /* Wallet Card */
-        .premium-card {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2); margin: -100px 20px 25px;
-            padding: 30px 20px; border-radius: 30px; text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2); color: white;
+        /* Glass Wallet Card */
+        .wallet-card {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2); margin: -110px 20px 25px;
+            padding: 35px 25px; border-radius: 40px; color: white;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
         }
+        .balance-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; font-weight: 600; }
+        .balance-val { font-size: 42px; font-weight: 800; font-family: 'Poppins'; margin: 5px 0 20px; }
 
-        /* Deposit UI Improvements */
-        .amount-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-        .amt-pill { 
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 15px; border-radius: 18px; font-weight: 700; cursor: pointer;
-            transition: 0.2s; text-align: center; color: var(--primary);
+        .action-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .act-btn { background: rgba(255,255,255,0.15); padding: 12px 5px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .act-btn i { font-size: 18px; display: block; margin-bottom: 5px; }
+        .act-btn span { font-size: 10px; font-weight: 600; }
+
+        /* Stats Badge */
+        .live-status { background: var(--card-bg); margin: 0 20px 20px; padding: 15px 20px; border-radius: 25px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
+        .status-dot { width: 10px; height: 10px; background: var(--success); border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px var(--success); }
+
+        /* Investment Cards */
+        .plan-card {
+            background: var(--card-bg); border-radius: 30px; padding: 20px; margin-bottom: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 1px solid var(--border-color);
+            display: flex; align-items: center; transition: 0.3s;
         }
-        .amt-pill:active { transform: scale(0.95); background: var(--secondary); color: white; }
+        .plan-icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; margin-right: 15px; }
+        .plan-info { flex: 1; }
+        .plan-info h4 { margin: 0; font-size: 17px; font-weight: 700; }
+        .plan-info p { margin: 3px 0; font-size: 12px; color: var(--text-muted); }
+        .plan-btn { background: var(--secondary); color: white; border: none; padding: 10px 18px; border-radius: 15px; font-weight: 700; font-size: 12px; }
 
-        .method-box {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border: 2px dashed #f59e0b; padding: 25px; border-radius: 25px; margin: 20px 0;
-            color: #92400e;
-        }
-
-        /* Profile Specific */
-        .profile-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; margin-top: -30px; }
-        .stat-box { 
-            background: var(--card-bg); padding: 20px; border-radius: 22px; 
-            box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-        }
-        .user-avatar { width: 90px; height: 90px; background: white; border-radius: 30px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: var(--secondary); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-
-        /* Modern Navigation Bar */
+        /* Navigation */
         .nav-bar {
-            position: fixed; bottom: 15px; left: 15px; right: 15px;
-            height: 75px; background: var(--nav-bg); 
-            display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 25px; z-index: 1000;
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            height: 75px; background: var(--card-bg); display: flex;
+            justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-radius: 30px; z-index: 1000;
             border: 1px solid var(--border-color);
         }
-        .nav-item { color: var(--text-muted); text-align: center; transition: 0.3s; flex: 1; position: relative; }
-        .nav-item i { font-size: 22px; margin-bottom: 4px; display: block; }
-        .nav-item span { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-item { color: var(--text-muted); text-align: center; flex: 1; transition: 0.3s; position: relative; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
+        .nav-item span { font-size: 10px; font-weight: 700; }
         .nav-item.active { color: var(--secondary); }
-        .nav-item.active::after {
-            content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            width: 20px; height: 4px; background: var(--secondary); border-radius: 10px;
-        }
+        .nav-item.active::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--secondary); border-radius: 50%; }
 
-        /* Inputs & Buttons */
-        .btn-action { 
-            background: var(--secondary); color: white; border: none; padding: 18px; 
-            border-radius: 20px; font-weight: 700; width: 100%; cursor: pointer;
-            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-        }
-        input { 
-            width: 100%; padding: 16px; margin: 10px 0; border-radius: 18px; 
-            border: 1px solid var(--border-color); background: var(--input-bg); 
-            color: var(--primary); box-sizing: border-box; font-size: 15px;
-        }
+        /* Forms */
+        .btn-main { background: var(--grad); color: white; border: none; padding: 18px; border-radius: 20px; width: 100%; font-weight: 700; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3); }
+        input { width: 100%; padding: 16px; margin: 10px 0; border-radius: 20px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
 
-        .page { display: none; padding-bottom: 120px; animation: slideUp 0.4s ease; }
+        .page { display: none; padding-bottom: 130px; animation: fadeIn 0.5s ease forwards; }
         .page.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -107,20 +107,22 @@
 <div id="toast-container"></div>
 
 <div id="auth-screen">
-    <div style="text-align:center; padding: 20px; min-height: 100vh; background: #0f172a; display: flex; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 40px; border-radius: 40px; width: 100%; max-width: 380px;">
-            <h2 style="color:#0f172a; font-family:'Poppins'; margin-bottom:30px;">Sky Money <span style="color:var(--secondary);">Pro</span></h2>
+    <div style="min-height: 100vh; background: #020617; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; padding: 40px 30px; border-radius: 45px; width: 100%; max-width: 400px; text-align: center;">
+            <div style="width:70px; height:70px; background:var(--grad); border-radius:20px; margin: 0 auto 20px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;"><i class="fas fa-cloud"></i></div>
+            <h2 style="font-family:'Poppins'; color:#0f172a; margin-bottom: 30px;">Sky Money <span style="color:var(--secondary);">Pro</span></h2>
+            
             <div id="login-form">
                 <input type="email" id="l-email" placeholder="Email Address">
                 <input type="password" id="l-pass" placeholder="Password">
-                <button class="btn-action" onclick="login()">SIGN IN</button>
-                <p onclick="toggleAuth(true)" style="font-size:13px; margin-top:20px; color:var(--text-muted);">New member? <span style="color:var(--secondary); font-weight:bold;">Create Account</span></p>
+                <button class="btn-main" onclick="login()">LOG IN</button>
+                <p onclick="toggleAuth(true)" style="margin-top:20px; color:var(--text-muted); font-size:14px;">Don't have an account? <b style="color:var(--secondary);">Sign Up</b></p>
             </div>
             <div id="reg-form" style="display:none;">
                 <input type="email" id="r-email" placeholder="Email Address">
                 <input type="password" id="r-pass" placeholder="Password">
-                <button class="btn-action" onclick="register()">REGISTER NOW</button>
-                <p onclick="toggleAuth(false)" style="font-size:13px; margin-top:20px; color:var(--text-muted);">Already have an account? <span style="color:var(--secondary); font-weight:bold;">Login</span></p>
+                <button class="btn-main" onclick="register()">CREATE ACCOUNT</button>
+                <p onclick="toggleAuth(false)" style="margin-top:20px; color:var(--text-muted); font-size:14px;">Already a member? <b style="color:var(--secondary);">Login</b></p>
             </div>
         </div>
     </div>
@@ -129,93 +131,94 @@
 <div id="main-app" style="display:none;">
     <section id="home" class="page active">
         <div class="home-hero">
-            <button style="position: absolute; right: 25px; top: 20px; border:none; background:rgba(255,255,255,0.1); color:white; width:45px; height:45px; border-radius:15px;" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
-            <h2 style="margin:0; font-family:'Poppins';">Dashboard</h2>
-            <p style="font-size:12px; opacity:0.7;">Welcome back to Sky Money Pro</p>
-        </div>
-        <div class="premium-card">
-            <div style="font-size: 12px; opacity: 0.8; letter-spacing: 1px;">AVAILABLE BALANCE</div>
-            <div style="font-size: 40px; font-weight: 700; margin: 10px 0;">Rs. <span id="bal-text">0</span></div>
-            <button onclick="getDailyBonus()" id="bonus-btn" style="background:var(--white); color:var(--secondary); border:none; padding:12px 25px; border-radius:15px; font-weight:700; font-size:12px;">CLAIM DAILY BONUS</button>
-        </div>
-        <div style="padding: 0 25px;"><h3 style="font-size:18px;">Active Mining</h3><div id="mining-status-area"></div></div>
-    </section>
-
-    <section id="deposit" class="page">
-        <div style="padding:25px;">
-            <h2 style="font-family:'Poppins';">Deposit Funds</h2>
-            <p style="color:var(--text-muted); font-size:14px; margin-bottom:25px;">Select an amount and complete transaction.</p>
-            
-            <div class="amount-selector">
-                <div class="amt-pill" onclick="setAmt('d', 1000)">Rs. 1000</div>
-                <div class="amt-pill" onclick="setAmt('d', 2000)">Rs. 2000</div>
-                <div class="amt-pill" onclick="setAmt('d', 5000)">Rs. 5000</div>
-                <div class="amt-pill" onclick="setAmt('d', 10000)">Rs. 10000</div>
-            </div>
-
-            <div class="method-box">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span><i class="fas fa-university"></i> Binance Pay ID</span>
-                    <button onclick="copyID()" style="border:none; background:var(--secondary); color:white; padding:5px 12px; border-radius:8px; font-size:12px;">COPY</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0; font-size:22px; font-family:'Poppins';">Sky Money Pro</h3>
+                    <p style="margin:0; font-size:12px; opacity:0.7;">Premium Cloud Mining</p>
                 </div>
-                <div style="font-size:24px; font-weight:800; margin-top:10px;">12345678</div>
+                <button onclick="toggleTheme()" style="background:rgba(255,255,255,0.1); border:none; width:45px; height:45px; border-radius:15px; color:white;"><i class="fas fa-moon" id="theme-icon"></i></button>
             </div>
-
-            <input type="number" id="d-amt" placeholder="Enter Amount (Rs.)">
-            <input type="text" id="d-txid" placeholder="Transaction ID (TXID)">
-            <button class="btn-action" style="margin-top:10px;" onclick="submitReq('deposit')">SUBMIT DEPOSIT</button>
         </div>
-    </section>
 
-    <section id="withdraw" class="page">
-        <div style="padding:25px;">
-            <h2 style="font-family:'Poppins';">Withdraw</h2>
-            <input type="number" id="w-amt" placeholder="Withdrawal Amount">
-            <input type="text" id="w-details" placeholder="Binance ID / Wallet Address">
-            <button class="btn-action" onclick="submitReq('withdraw')">CONFIRM WITHDRAWAL</button>
+        <div class="wallet-card">
+            <div class="balance-label">Main Assets Balance</div>
+            <div class="balance-val">Rs. <span id="bal-text">0</span></div>
+            <div class="action-row">
+                <div class="act-btn" onclick="nav('deposit')"><i class="fas fa-plus"></i><span>Deposit</span></div>
+                <div class="act-btn" onclick="nav('withdraw')"><i class="fas fa-arrow-up"></i><span>Send</span></div>
+                <div class="act-btn" onclick="nav('market')"><i class="fas fa-shopping-cart"></i><span>Buy</span></div>
+                <div class="act-btn" onclick="window.open('https://t.me/Sky_Money_Money_Pro')"><i class="fab fa-telegram"></i><span>Group</span></div>
+            </div>
+        </div>
+
+        <div class="live-status">
+            <span><div class="status-dot"></div> Live Mining Hashrate</span>
+            <b style="color:var(--secondary);">94.8 TH/s</b>
+        </div>
+
+        <div style="padding: 0 25px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="margin:0; font-size:18px;">Active Miners</h3>
+                <button onclick="getDailyBonus()" id="bonus-btn" style="border:none; background:var(--success); color:white; padding:5px 12px; border-radius:10px; font-size:11px; font-weight:700;">DAILY BONUS</button>
+            </div>
+            <div id="mining-status-area"></div>
         </div>
     </section>
 
     <section id="market" class="page">
-        <h2 style="padding:25px 25px 0;">Mining Plans</h2>
-        <div style="padding: 20px;" id="market-list"></div>
+        <div style="padding:30px 25px 10px;">
+            <h2 style="margin:0; font-family:'Poppins';">Investment Plans</h2>
+            <p style="color:var(--text-muted); font-size:13px;">Choose a plan to start earning daily profit.</p>
+        </div>
+        <div id="market-list" style="padding: 0 20px;"></div>
+    </section>
+
+    <section id="deposit" class="page">
+        <div style="padding:30px 25px;">
+            <h2 style="font-family:'Poppins';">Deposit Money</h2>
+            <div style="background:var(--grad); padding:25px; border-radius:30px; color:white; margin:20px 0;">
+                <span style="font-size:12px; opacity:0.8;">BINANCE PAY ID</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <b style="font-size:24px;" id="bin-id">12345678</b>
+                    <i class="fas fa-copy" onclick="copyID()" style="cursor:pointer; font-size:20px;"></i>
+                </div>
+            </div>
+            <input type="number" id="d-amt" placeholder="Enter Amount (Rs.)">
+            <input type="text" id="d-txid" placeholder="Transaction ID (TXID)">
+            <button class="btn-main" onclick="submitReq('deposit')">DEPOSIT NOW</button>
+        </div>
+    </section>
+
+    <section id="withdraw" class="page">
+        <div style="padding:30px 25px;">
+            <h2 style="font-family:'Poppins';">Withdraw</h2>
+            <input type="number" id="w-amt" placeholder="Withdrawal Amount">
+            <input type="text" id="w-details" placeholder="Your Wallet/Binance ID">
+            <button class="btn-main" onclick="submitReq('withdraw')">REQUEST WITHDRAW</button>
+        </div>
     </section>
 
     <section id="profile" class="page">
-        <div class="profile-hero">
-            <div class="user-avatar"><i class="fas fa-user-tie"></i></div>
-            <h3 id="u-email" style="margin:5px 0;">User Account</h3>
-            <span style="background:rgba(255,255,255,0.2); padding:5px 15px; border-radius:20px; font-size:11px;">PREMIUM MEMBER</span>
+        <div style="text-align:center; padding:50px 25px 30px;">
+            <div style="width:100px; height:100px; background:var(--grad); border-radius:35px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; color:white; font-size:40px; box-shadow:0 15px 30px rgba(37,99,235,0.2);"><i class="fas fa-user"></i></div>
+            <h3 id="u-email" style="margin:0; font-family:'Poppins';">User</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin-top:5px;">Referral Code: <b id="u-ref-code" style="color:var(--secondary);">---</b></p>
         </div>
         
-        <div class="profile-stat-grid">
-            <div class="stat-box">
-                <span style="font-size:11px; color:var(--text-muted); font-weight:600;">BALANCE</span>
-                <div style="font-size:18px; font-weight:700;">Rs. <span id="p-bal">0</span></div>
-            </div>
-            <div class="stat-box">
-                <span style="font-size:11px; color:var(--text-muted); font-weight:600;">REFERRAL</span>
-                <div style="font-size:18px; font-weight:700;" id="u-ref-code">---</div>
-            </div>
-        </div>
-
-        <h3 style="padding:30px 25px 10px;">Transactions</h3>
-        <div id="trans-history" style="padding: 0 5px;"></div>
+        <div id="trans-history" style="padding: 0 20px;"></div>
         
-        <div style="padding:25px;"><button class="btn-action" style="background:var(--danger);" onclick="logout()">SIGN OUT</button></div>
+        <div style="padding:30px 20px;"><button class="btn-main" style="background:var(--danger);" onclick="logout()">LOGOUT</button></div>
     </section>
 
     <nav class="nav-bar">
-        <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-th-large"></i><span>Home</span></div>
-        <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-bolt"></i><span>Plans</span></div>
+        <div class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="nav-item" onclick="nav('market', this)"><i class="fas fa-layer-group"></i><span>Plans</span></div>
         <div class="nav-item" onclick="nav('deposit', this)"><i class="fas fa-wallet"></i><span>Deposit</span></div>
-        <div class="nav-item" onclick="nav('withdraw', this)"><i class="fas fa-paper-plane"></i><span>Send</span></div>
-        <div class="nav-item" onclick="nav('profile', this)"><i class="fas fa-user"></i><span>Profile</span></div>
+        <div class="nav-item" onclick="nav('profile', this)"><i class="fas fa-user-circle"></i><span>Profile</span></div>
     </nav>
 </div>
 
 <script type="module">
-    // Firebase Logic (Same as your original code, kept intact for functionality)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -226,18 +229,28 @@
     const db = getFirestore(app);
     let userData = null;
 
+    const plans = [
+        { name: 'Micro Miner', cost: 500, daily: 10, grad: 'linear-gradient(135deg, #fbbf24, #f59e0b)', icon: 'microchip' },
+        { name: 'Starter Node', cost: 1000, daily: 25, grad: 'linear-gradient(135deg, #34d399, #10b981)', icon: 'server' },
+        { name: 'Cloud Core', cost: 1500, daily: 45, grad: 'linear-gradient(135deg, #60a5fa, #2563eb)', icon: 'cloud' },
+        { name: 'Pro Rig', cost: 2000, daily: 70, grad: 'linear-gradient(135deg, #a78bfa, #7c3aed)', icon: 'memory' },
+        { name: 'Silver Hub', cost: 2500, daily: 100, grad: 'linear-gradient(135deg, #94a3b8, #475569)', icon: 'database' },
+        { name: 'Gold Prime', cost: 3000, daily: 135, grad: 'linear-gradient(135deg, #fcd34d, #d97706)', icon: 'gem' },
+        { name: 'Titan Miner', cost: 3500, daily: 175, grad: 'linear-gradient(135deg, #5eead4, #0d9488)', icon: 'bolt' },
+        { name: 'Ultra Node', cost: 4000, daily: 220, grad: 'linear-gradient(135deg, #f472b6, #db2777)', icon: 'rocket' },
+        { name: 'Quantum CPU', cost: 4500, daily: 270, grad: 'linear-gradient(135deg, #818cf8, #4f46e5)', icon: 'atom' },
+        { name: 'Alpha Rig', cost: 5000, daily: 330, grad: 'linear-gradient(135deg, #f87171, #dc2626)', icon: 'shield' }
+    ];
+
     window.showToast = (msg, type = 'info') => {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast-card ${type}`;
-        toast.innerHTML = `<div style="font-size:13px; font-weight:600;">${msg}</div>`;
+        toast.innerHTML = `<span style="font-size:13px; font-weight:700;">${msg}</span>`;
         container.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 100);
         setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); }, 3000);
     };
-
-    window.setAmt = (type, val) => { document.getElementById(type + '-amt').value = val; };
-    window.copyID = () => { navigator.clipboard.writeText("12345678"); showToast("ID Copied to clipboard!", "success"); };
 
     onAuthStateChanged(auth, (user) => {
         if(user) {
@@ -254,79 +267,72 @@
 
     window.updateUI = () => {
         document.getElementById('bal-text').innerText = userData.bal.toLocaleString();
-        document.getElementById('p-bal').innerText = userData.bal.toLocaleString();
-        document.getElementById('u-email').innerText = userData.email;
+        document.getElementById('u-email').innerText = userData.email.split('@')[0];
         document.getElementById('u-ref-code').innerText = userData.refCode;
 
-        // Mining Status UI
-        document.getElementById('mining-status-area').innerHTML = userData.activePlans.map(p => {
-            const progress = 45; // Placeholder
-            return `<div style="background:var(--card-bg); padding:15px; border-radius:20px; margin-bottom:10px; border:1px solid var(--border-color);">
-                <div style="display:flex; justify-content:space-between; font-weight:700;"><span>${p.name}</span><span>${progress}%</span></div>
-                <div style="background:var(--input-bg); height:8px; border-radius:10px; margin-top:10px; overflow:hidden;">
-                    <div style="background:var(--secondary); width:${progress}%; height:100%;"></div>
+        // Home Active Mining
+        document.getElementById('mining-status-area').innerHTML = userData.activePlans.map(p => `
+            <div style="background:var(--card-bg); padding:15px; border-radius:20px; margin-bottom:10px; border:1px solid var(--border-color); display:flex; align-items:center;">
+                <div style="width:40px; height:40px; background:var(--secondary); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; margin-right:12px;"><i class="fas fa-cog fa-spin"></i></div>
+                <div style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:13px;"><span>${p.name}</span><span style="color:var(--success);">Mining...</span></div>
                 </div>
-            </div>`;
-        }).join('') || '<p style="color:var(--text-muted);">No mining plans active.</p>';
+            </div>
+        `).join('') || '<p style="text-align:center; color:var(--text-muted); font-size:12px;">No active miners. Go to Market to buy.</p>';
 
-        // Market Plans UI
-        const plans = [
-            { name: 'Bronze Cloud', cost: 1000, daily: 50, color: '#f59e0b' },
-            { name: 'Silver Cloud', cost: 5000, daily: 300, color: '#2563eb' }
-        ];
+        // Market Plans
         document.getElementById('market-list').innerHTML = plans.map(p => `
-            <div style="background:var(--card-bg); padding:20px; border-radius:25px; margin-bottom:15px; box-shadow:var(--card-shadow); display:flex; justify-content:space-between; align-items:center;">
-                <div><b style="font-size:18px;">${p.name}</b><br><span style="color:var(--success); font-weight:700;">Daily: Rs. ${p.daily}</span></div>
-                <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto; padding:10px 20px; background:${p.color};">Invest</button>
+            <div class="plan-card">
+                <div class="plan-icon" style="background:${p.grad}"><i class="fas fa-${p.icon}"></i></div>
+                <div class="plan-info">
+                    <h4>${p.name}</h4>
+                    <p>Price: Rs. ${p.cost}</p>
+                    <p style="color:var(--success); font-weight:700;">Daily: Rs. ${p.daily}</p>
+                </div>
+                <button class="plan-btn" onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')">Buy</button>
             </div>
         `).join('');
 
-        // History UI
-        document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
-            <div style="background:var(--card-bg); margin:10px 20px; padding:15px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border-color);">
+        // History
+        document.getElementById('trans-history').innerHTML = '<h3>Activity History</h3>' + userData.requests.map(r => `
+            <div style="background:var(--card-bg); padding:15px; border-radius:15px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--border-color);">
                 <div><b>${r.type.toUpperCase()}</b><br><small>${r.status}</small></div>
-                <div style="color:${r.type==='deposit'?'var(--success)':'var(--danger)'}; font-weight:700;">Rs. ${r.amount}</div>
+                <b style="color:${r.type==='deposit'?'var(--success)':'var(--danger)'}">Rs. ${r.amount}</b>
             </div>
         `).reverse().join('');
+
+        if(userData.bonusClaimed) document.getElementById('bonus-btn').style.opacity = '0.5';
     };
 
-    window.login = async () => { 
-        try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } 
-        catch(e) { showToast("Authentication Failed!", "error"); } 
-    };
-
+    window.login = async () => { try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } catch(e) { showToast("Login failed!", "error"); } };
     window.register = async () => {
         const e = document.getElementById('r-email').value; const p = document.getElementById('r-pass').value;
-        try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); } 
-        catch(err) { showToast(err.message, "error"); }
+        try { 
+            const res = await createUserWithEmailAndPassword(auth, e, p); 
+            await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); 
+        } catch(err) { showToast(err.message, "error"); }
+    };
+    
+    window.buyPlan = async (cost, daily, name) => {
+        if(userData.bal < cost) return showToast("Low balance!", "error");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: Date.now() }) });
+        showToast("Plan activated!", "success");
     };
 
-    window.logout = () => signOut(auth).then(() => location.reload());
-    
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
         const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
-        if(!amt || !details) return showToast("Please fill all fields!", "error");
-        await updateDoc(doc(db, "users", auth.currentUser.uid), { 
-            requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }),
-            bal: type==='withdraw' ? userData.bal - amt : userData.bal 
-        }); 
-        showToast("Request submitted successfully!", "success");
+        if(!amt || !details) return showToast("Fill all fields!", "error");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) });
+        showToast("Request sent!", "success");
     };
 
-    window.nav = (id, el) => { 
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
-        document.getElementById(id).classList.add('active'); 
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
-        el.classList.add('active'); 
-    };
-
-    window.toggleTheme = () => { 
-        document.body.classList.toggle('dark-mode'); 
-        document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon'; 
-    };
+    window.getDailyBonus = async () => { if(!userData.bonusClaimed) { await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true }); showToast("Bonus added!", "success"); } };
+    window.nav = (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); } };
+    window.toggleTheme = () => { document.body.classList.toggle('dark-mode'); document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon'; };
+    window.logout = () => signOut(auth).then(() => location.reload());
+    window.copyID = () => { navigator.clipboard.writeText("12345678"); showToast("Copied!", "success"); };
     window.toggleAuth = (isReg) => { document.getElementById('login-form').style.display = isReg ? 'none' : 'block'; document.getElementById('reg-form').style.display = isReg ? 'block' : 'none'; };
 </script>
-
 </body>
 </html>
