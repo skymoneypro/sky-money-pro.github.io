@@ -285,7 +285,6 @@
             </div>`;
         }).join('') || '<p style="text-align:center; color:var(--text-muted); padding:20px;">No active mining packages.</p>';
 
-        // PLANS RE-ADJUSTED (500 - 5000)
         const plans = [
             { name: 'Plan 1', cost: 500, daily: 10, color: '#f59e0b' },
             { name: 'Plan 2', cost: 1000, daily: 25, color: '#10b981' },
@@ -315,7 +314,28 @@
         try { const res = await createUserWithEmailAndPassword(auth, e, p); await setDoc(doc(db, "users", res.user.uid), { email: e, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), activePlans: [], requests: [], bonusClaimed: false }); } catch(err) { alert(err.message); }
     };
     window.logout = () => signOut(auth).then(() => location.reload());
-    window.buyPlan = async (cost, daily, name) => { if(userData.bal < cost) return alert("Insufficient balance!"); await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal - cost, activePlans: arrayUnion({ name, daily, startTime: Date.now() }) }); alert("Investment successful!"); };
+
+    // මූලිකව වෙනස් කරන ලද buyPlan කොටස
+    window.buyPlan = async (cost, daily, name) => {
+        if(userData.bal < cost) return alert("Insufficient balance!");
+        
+        const now = Date.now();
+        // දැනට සක්‍රියව පවතින එම නමම ඇති පැකේජයක් තිබේදැයි පරීක්ෂා කිරීම (දින 30ක් යනතුරු)
+        const isPlanActive = userData.activePlans.some(p => {
+            const daysPassed = (now - p.startTime) / 86400000;
+            return p.name === name && daysPassed < 30;
+        });
+
+        if(isPlanActive) {
+            return alert("මෙම පැකේජය දැනටමත් සක්‍රියයි. එය නැවත මිලදී ගැනීමට පෙර සක්‍රිය කාලය අවසන් වන තෙක් රැඳී සිටින්න.");
+        }
+
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { 
+            bal: userData.bal - cost, 
+            activePlans: arrayUnion({ name, daily, startTime: now }) 
+        }); 
+        alert("Investment successful!"); 
+    };
     
     window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
