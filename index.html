@@ -23,67 +23,76 @@
             color: var(--primary);
         }
 
-        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+        body { margin: 0; background: var(--light); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s; }
 
-        /* UI Components */
+        /* Telegram Popup UI */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 20000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .popup-card { background: var(--card-bg); padding: 25px; border-radius: 24px; text-align: center; width: 85%; max-width: 320px; box-shadow: var(--card-shadow); transition: background 0.3s; }
+
+        /* Banner Slide */
         .banner-container { width: calc(100% - 40px); height: 130px; overflow: hidden; position: relative; border-radius: 20px; margin: 20px auto; box-shadow: var(--card-shadow); }
         .banner-wrapper { display: flex; width: 800%; height: 100%; animation: slide 24s infinite linear; }
         .banner-slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
         
         @keyframes slide {
             0%, 8% { transform: translateX(0%); }
-            100% { transform: translateX(-87.5%); }
+            12.5%, 20.5% { transform: translateX(-12.5%); }
+            25%, 33% { transform: translateX(-25%); }
+            37.5%, 45.5% { transform: translateX(-37.5%); }
+            50%, 58% { transform: translateX(-50%); }
+            62.5%, 70.5% { transform: translateX(-62.5%); }
+            75%, 83% { transform: translateX(-75%); }
+            87.5%, 95.5% { transform: translateX(-87.5%); }
+            100% { transform: translateX(0%); }
         }
 
-        #auth-screen { 
-            min-height: 100vh; 
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1611974714024-4607caec1334?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;
-        }
-
-        .header-box { 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
-            color: white; padding: 50px 20px 80px; border-radius: 0 0 45px 45px; 
-            text-align: center; position: relative;
-        }
-        
+        /* Profile & Layout */
+        .header-box { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 50px 20px 80px; border-radius: 0 0 45px 45px; text-align: center; position: relative; }
+        .theme-toggle-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.15); border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .main-card { background: var(--card-bg); margin: -60px 20px 20px; padding: 25px; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; position: relative; z-index: 10; }
-        .btn-action { background: var(--secondary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; }
+        .btn-action { background: var(--secondary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; }
         input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--primary); box-sizing: border-box; }
-
+        .profile-card { background: linear-gradient(135deg, var(--secondary), #1d4ed8); color: white; margin: 20px; padding: 25px; border-radius: 24px; }
+        .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 20px 20px; text-align: center; }
+        .action-item { background: var(--card-bg); padding: 15px 5px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
         .nav-item { color: var(--text-muted); text-align: center; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: var(--secondary); font-weight: 700; }
-
         .page { display: none; padding-bottom: 110px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
-
-        .status-pill { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
-        .status-pending { background: #fef3c7; color: #b45309; }
-        .status-approved { background: #dcfce7; color: #15803d; }
-        .status-rejected { background: #fee2e2; color: #b91c1c; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
+<div id="tg-popup" class="modal-overlay">
+    <div class="popup-card">
+        <i class="fab fa-telegram" style="font-size: 50px; color: #0088cc; margin-bottom: 15px;"></i>
+        <h3 style="margin: 0 0 10px 0;">Join Telegram Group</h3>
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom: 20px;">දිනපතා Withdraw Proof සහ අලුත්ම තොරතුරු දැනගන්න අපගේ Telegram සමූහයට එක්වන්න.</p>
+        <a href="https://t.me/Sky_Money_Money_Pro" target="_blank" style="text-decoration:none;"><button class="btn-action" style="background:#0088cc;">JOIN NOW</button></a>
+        <button onclick="closePopup()" id="close-btn" style="margin-top:15px; border:none; background:none; color:var(--text-muted); width:100%; cursor:pointer; font-size: 12px; display: none;">CLOSE (5s)</button>
+    </div>
+</div>
+
 <div id="auth-screen">
     <div style="text-align:center; padding: 20px; width: 100%;">
-        <h1 style="font-family:'Poppins'; color: white; font-size: 32px;">Sky Money <span style="color:var(--accent);">Pro</span></h1>
-        <div style="background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 28px; max-width: 400px; margin: 0 auto;">
+        <h1 style="color: white; font-family:'Poppins';">Sky Money <span style="color:var(--accent);">Pro</span></h1>
+        <div style="background: white; padding: 30px; border-radius: 28px; max-width: 400px; margin: 0 auto;">
             <div id="login-form">
-                <h3 style="color: #0f172a;">Login</h3>
+                <h3 style="color:#0f172a;">Login</h3>
                 <input type="email" id="l-email" placeholder="Email Address">
                 <input type="password" id="l-pass" placeholder="Password">
                 <button class="btn-action" onclick="login()">LOGIN</button>
-                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor: pointer;">Don't have an account? Register</p>
+                <p onclick="toggleAuth(true)" style="font-size:12px; margin-top:15px; color:var(--secondary); cursor:pointer;">New here? Register</p>
             </div>
             <div id="reg-form" style="display:none;">
-                <h3 style="color: #0f172a;">Create Account</h3>
+                <h3 style="color:#0f172a;">Register</h3>
                 <input type="email" id="r-email" placeholder="Email Address">
                 <input type="password" id="r-pass" placeholder="Password">
                 <input type="text" id="r-ref" placeholder="Referral Code (Optional)">
                 <button class="btn-action" onclick="register()">REGISTER</button>
-                <p onclick="toggleAuth(false)" style="font-size:12px; margin-top:15px; cursor: pointer;">Back to Login</p>
+                <p onclick="toggleAuth(false)" style="font-size:12px; margin-top:15px; cursor:pointer;">Back to Login</p>
             </div>
         </div>
     </div>
@@ -92,53 +101,62 @@
 <div id="main-app" style="display:none;">
     <section id="home" class="page active">
         <div class="header-box">
-            <h2 style="font-family:'Poppins'; margin:0; font-size: 28px;">Sky Money <span style="color:var(--accent);">Pro</span></h2>
+            <button class="theme-toggle-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
+            <h2 style="font-family:'Poppins'; margin:0;">Sky Money Pro</h2>
             <p style="font-size: 11px; opacity: 0.9;">THE MOST TRUSTED MINING PLATFORM</p>
         </div>
-        <div class="main-card">
-            <small style="font-weight:600; color:var(--text-muted);">WALLET BALANCE</small>
-            <h1 id="bal-text" style="font-size:36px; margin:10px 0;">Rs. 0</h1>
-            <button onclick="getDailyBonus()" id="bonus-btn" class="btn-action" style="width:auto; border-radius:30px; padding: 12px 30px;">
-                CLAIM Rs. 200 BONUS
-            </button>
+
+        <div class="banner-container">
+            <div class="banner-wrapper">
+                <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/digital-money-transfer-technology-background_1017-17454.jpg');"></div>
+                <div class="banner-slide" style="background-image: url('https://img.freepik.com/free-vector/gradient-crypto-mining-concept_23-2148914624.jpg');"></div>
+            </div>
         </div>
-        <div style="padding: 0 20px;" id="mining-status-area"></div>
+
+        <div class="main-card">
+            <small style="color:var(--text-muted); font-weight:600;">TOTAL BALANCE</small>
+            <h1 id="bal-text" style="font-size:36px; margin:10px 0;">Rs. 0</h1>
+            <button onclick="getDailyBonus()" id="bonus-btn" class="btn-action" style="width:auto; border-radius:30px; padding: 12px 30px;">CLAIM Rs. 200 BONUS</button>
+        </div>
+
+        <div style="padding: 0 20px;">
+            <h3 style="font-size:16px;"><i class="fas fa-chart-line"></i> Active Mining Status</h3>
+            <div id="mining-status-area"></div>
+        </div>
     </section>
 
     <section id="market" class="page">
-        <h3 style="padding:20px;">Monthly Plans</h3>
+        <h3 style="padding:20px;">Investment Plans</h3>
         <div style="padding: 0 20px;" id="market-list"></div>
     </section>
 
     <section id="profile" class="page">
-        <div style="padding:20px;">
-            <div style="background:var(--secondary); color:white; padding:20px; border-radius:20px;">
-                <h2 id="u-email" style="margin:0; font-size:16px;">Loading...</h2>
-                <p id="u-ref-display" style="font-size:12px; opacity:0.8;"></p>
+        <div class="profile-card">
+            <div style="display:flex; align-items:center;">
+                <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-user"></i></div>
+                <div style="margin-left:15px;"><h2 id="u-email-display" style="margin:0; font-size:14px;">Loading...</h2><small>Verified</small></div>
             </div>
-            <h3 style="margin-top:25px;">History</h3>
-            <div id="trans-history"></div>
-            <button class="btn-action" style="background:var(--danger); margin-top:20px;" onclick="logout()">LOGOUT</button>
+            <div style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px;">
+                <div><small>Balance</small><div id="p-bal" style="font-weight:700;">Rs. 0</div></div>
+                <div style="text-align:right;"><small>Code</small><div id="u-ref-code" style="font-weight:700;">---</div></div>
+            </div>
         </div>
+        <div class="action-grid">
+            <div class="action-item" onclick="nav('deposit')"><i class="fas fa-plus-circle" style="color:var(--secondary)"></i><br><small>Deposit</small></div>
+            <div class="action-item" onclick="nav('withdraw')"><i class="fas fa-wallet" style="color:#10b981"></i><br><small>Withdraw</small></div>
+            <div class="action-item" onclick="nav('market')"><i class="fas fa-rocket" style="color:#8b5cf6"></i><br><small>Upgrade</small></div>
+            <div class="action-item" onclick="window.open('https://t.me/Sky_Money_Money_Pro')"><i class="fab fa-telegram" style="color:#0088cc"></i><br><small>Group</small></div>
+        </div>
+        <div id="trans-history" style="padding:0 20px;"></div>
+        <div style="padding:20px;"><button class="btn-action" style="background:var(--danger);" onclick="logout()">LOGOUT</button></div>
     </section>
 
     <section id="deposit" class="page">
-        <div style="padding:20px;">
-            <h3>Deposit Funds</h3>
-            <p style="font-size:12px; color:var(--text-muted);">Binance ID: 12345678</p>
-            <input type="number" id="d-amt" placeholder="Amount">
-            <input type="text" id="d-txid" placeholder="Transaction ID">
-            <button class="btn-action" onclick="submitRequest('deposit')">Submit Deposit</button>
-        </div>
+        <div style="padding:20px;"><h3>Deposit</h3><input type="number" id="d-amt" placeholder="Amount"><input type="text" id="d-txid" placeholder="Transaction ID"><button class="btn-action" onclick="submitReq('deposit')">Submit</button></div>
     </section>
 
     <section id="withdraw" class="page">
-        <div style="padding:20px;">
-            <h3>Withdraw Funds</h3>
-            <input type="number" id="w-amt" placeholder="Amount (Min: 1000)">
-            <input type="text" id="w-details" placeholder="Binance ID or Bank Details">
-            <button class="btn-action" onclick="submitRequest('withdraw')">Submit Withdrawal</button>
-        </div>
+        <div style="padding:20px;"><h3>Withdraw</h3><input type="number" id="w-amt" placeholder="Amount"><input type="text" id="w-details" placeholder="Binance ID"><button class="btn-action" onclick="submitReq('withdraw')">Submit</button></div>
     </section>
 
     <nav class="nav-bar">
@@ -167,28 +185,32 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
     let userData = null;
 
-    // --- Auth Logic ---
+    // --- Popup Logic ---
+    window.showPopup = () => {
+        document.getElementById('tg-popup').style.display = 'flex';
+        setTimeout(() => { document.getElementById('close-btn').style.display = 'block'; }, 5000);
+    };
+    window.closePopup = () => document.getElementById('tg-popup').style.display = 'none';
+
+    // --- Authentication ---
     window.register = async () => {
         const email = document.getElementById('r-email').value;
         const pass = document.getElementById('r-pass').value;
-        if(!email || pass.length < 6) return alert("Valid email and 6+ char password required.");
+        if(!email || pass.length < 6) return alert("Valid data required.");
         try {
             const res = await createUserWithEmailAndPassword(auth, email, pass);
             await setDoc(doc(db, "users", res.user.uid), {
                 email, bal: 0, refCode: "SKY"+Math.floor(1000+Math.random()*9000), 
                 activePlans: [], requests: [], bonusClaimed: false, isBanned: false
             });
-            alert("Account Created!");
         } catch(e) { alert(e.message); }
     };
 
     window.login = async () => {
-        const email = document.getElementById('l-email').value;
-        const pass = document.getElementById('l-pass').value;
-        try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login Failed!"); }
+        try { await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value); } 
+        catch(e) { alert("Login Failed!"); }
     };
 
     window.logout = () => signOut(auth).then(() => location.reload());
@@ -198,90 +220,56 @@
             onSnapshot(doc(db, "users", user.uid), (snap) => {
                 if(snap.exists()) {
                     userData = snap.data();
-                    if(userData.isBanned) {
-                        alert("Your account is BANNED.");
-                        logout();
-                        return;
-                    }
+                    if(userData.isBanned) { alert("Banned!"); logout(); return; }
                     document.getElementById('auth-screen').style.display = 'none';
                     document.getElementById('main-app').style.display = 'block';
                     updateUI();
+                    // App එකට ලොග් වූ සැණින් Popup එක පෙන්වන්න
+                    if(!window.popupShown) { showPopup(); window.popupShown = true; }
                 }
             });
         }
     });
 
-    // --- App Functions ---
     window.updateUI = () => {
-        document.getElementById('bal-text').innerText = "Rs. " + (userData.bal || 0).toLocaleString();
-        document.getElementById('u-email').innerText = userData.email;
-        document.getElementById('u-ref-display').innerText = "Referral Code: " + userData.refCode;
-        
-        // Market
-        const plans = [
-            {name: 'Starter', cost: 1000, daily: 70},
-            {name: 'Bronze', cost: 2500, daily: 180},
-            {name: 'Silver', cost: 5000, daily: 380}
-        ];
+        document.getElementById('bal-text').innerText = "Rs. " + userData.bal.toLocaleString();
+        document.getElementById('p-bal').innerText = "Rs. " + userData.bal.toLocaleString();
+        document.getElementById('u-email-display').innerText = userData.email;
+        document.getElementById('u-ref-code').innerText = userData.refCode;
+
+        // Market & Mining
+        const plans = [{ name: 'Starter', cost: 1000, daily: 70 }, { name: 'Bronze', cost: 2500, daily: 180 }];
         document.getElementById('market-list').innerHTML = plans.map(p => `
-            <div style="background:white; padding:15px; border-radius:15px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
-                <div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div>
-                <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto;">Invest</button>
-            </div>
-        `).join('');
+            <div class="inv-card"><div><b>${p.name}</b><br><small>Rs. ${p.cost}</small></div>
+            <button onclick="buyPlan(${p.cost}, ${p.daily}, '${p.name}')" class="btn-action" style="width:auto;">Invest</button></div>`).join('');
 
-        // History
         document.getElementById('trans-history').innerHTML = userData.requests.map(r => `
-            <div style="background:white; padding:12px; border-radius:12px; margin-bottom:8px; display:flex; justify-content:space-between;">
-                <span>${r.type.toUpperCase()} - Rs. ${r.amount}</span>
-                <span class="status-pill status-${r.status}">${r.status}</span>
-            </div>
-        `).reverse().join('');
+            <div class="trx-item"><div><b>${r.type}</b></div><div>Rs. ${r.amount} (${r.status})</div></div>`).reverse().join('');
     };
 
-    window.submitRequest = async (type) => {
+    window.submitReq = async (type) => {
         const amt = parseInt(document.getElementById(type === 'deposit' ? 'd-amt' : 'w-amt').value);
-        const bin = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
-        
-        if(!amt || amt < 1000) return alert("Minimum amount is Rs. 1000");
-        
-        // Withdraw නම් අතින් balance එක කලින් අඩු කරනවා
-        if(type === 'withdraw') {
-            if(userData.bal < amt) return alert("Insufficient balance!");
-            await updateDoc(doc(db, "users", auth.currentUser.uid), {
-                bal: userData.bal - amt,
-                requests: arrayUnion({ type, amount: amt, status: 'pending', payID: bin, time: Date.now() })
-            });
-        } else {
-            await updateDoc(doc(db, "users", auth.currentUser.uid), {
-                requests: arrayUnion({ type, amount: amt, status: 'pending', payID: bin, time: Date.now() })
-            });
-        }
-        alert("Request Submitted!");
-        nav('profile');
-    };
-
-    window.buyPlan = async (cost, daily, name) => {
-        if(userData.bal < cost) return alert("Insufficient balance");
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-            bal: userData.bal - cost,
-            activePlans: arrayUnion({ name, daily, startTime: Date.now() })
-        });
-        alert("Investment Successful!");
+        const details = document.getElementById(type === 'deposit' ? 'd-txid' : 'w-details').value;
+        let updateData = { requests: arrayUnion({ type, amount: amt, status: 'pending', payID: details, time: Date.now() }) };
+        if(type === 'withdraw') { if(userData.bal < amt) return alert("No bal"); updateData.bal = userData.bal - amt; }
+        await updateDoc(doc(db, "users", auth.currentUser.uid), updateData);
+        alert("Success!"); nav('profile');
     };
 
     window.getDailyBonus = async () => {
-        if(userData.bonusClaimed) return alert("Already claimed!");
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-            bal: userData.bal + 200, bonusClaimed: true
-        });
-        alert("Rs. 200 Bonus Claimed!");
+        if(userData.bonusClaimed) return alert("Already claimed");
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { bal: userData.bal + 200, bonusClaimed: true });
     };
 
     window.nav = (id, el) => {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         if(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
+    };
+
+    window.toggleTheme = () => {
+        document.body.classList.toggle('dark-mode');
+        document.getElementById('theme-icon').className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
     };
 
     window.toggleAuth = (showReg) => {
